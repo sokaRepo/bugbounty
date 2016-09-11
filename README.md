@@ -25,13 +25,13 @@ This web application is built with Flask, a web Python framework based on Jinja:
 
 ### Download App
 	
-	```
-	git clone https://github.com/sokaRepo/bugbounty.git
-	```
+```
+git clone https://github.com/sokaRepo/bugbounty.git
+```
 
 ### Run App
 	
-	```
-	export FLASK_APP=app.py
-	flask run
-	```
+```
+export FLASK_APP=app.py
+flask run
+```
