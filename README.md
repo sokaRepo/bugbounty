@@ -9,20 +9,19 @@ This web application is built with Flask, a web Python framework based on Jinja:
 ### Depedencies
 
 
-	1. Pip 
+* Pip 
 
-		```bash
-		cd /tmp/
-		wget https://bootstrap.pypa.io/get-pip.py
-		python get-pip.py
-		rm get-pip.py
-		```
-	1. Flask python library
+	```bash
+	cd /tmp/
+	wget https://bootstrap.pypa.io/get-pip.py
+	python get-pip.py
+	rm get-pip.py
+	```
+* Flask python library
 
-		```bash
-		pip install flask
-		```
-
+	```bash
+	pip install flask
+	```
 
 ### Download App
 	
