@@ -1,0 +1,59 @@
+		<!-- Colored FAB button used for edit -->
+		<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored" id="show-dialog">
+		  <i class="material-icons">add</i>
+		</button>
+
+		<!-- Dialog to add a bounty -->
+	     <dialog class="mdl-dialog">
+	       <h4 class="mdl-dialog__title">New Bounty</h4>
+
+	   	   <form id="addbounty-form">
+	   	    <div class="mdl-dialog__content">
+	   	      <p>
+	   	        A bug bounty program is a deal offered by many websites and software developers by which individuals can receive recognition and compensation for reporting bugs.
+	   	      </p>
+	   	      <p id="addbounty-result" class="color:green"></p>		    
+
+			     <div class="mdl-textfield mdl-textfield-mini mdl-js-textfield mdl-textfield--floating-label">
+	   		   	<select class="mdl-textfield__input" id='vuln' name='vuln'>
+	   			  <option value="xss">XSS</option>
+	   			  <option value="sqli">SQLI</option>
+	   			  <option value="rce">RCE</option>
+		   		  <option value="xxe">XXE</option>
+		   		  <option value="ssrf">SSRF</option>
+		   		  <option value="ssti">SSTI</option>
+		   		  <option value="csv">CSVi</option>
+		   		  <option value="logic">Logic</option>
+		   		  <option value="other">Other</option>
+		   		</select>
+		   	    <label class="mdl-textfield__label" for="sample3">Vulnerability</label>
+			  </div>
+   
+		   	  <div class="mdl-textfield mdl-textfield-mini mdl-js-textfield mdl-textfield--floating-label">
+		   	    <input class="mdl-textfield__input" type="text" name="reward">
+		   	    <label class="mdl-textfield__label" for="sample3">Reward</label>
+		   	  </div>
+   
+			  <div class="mdl-textfield mdl-textfield-mini mdl-js-textfield mdl-textfield--floating-label">
+		   		<select class="mdl-textfield__input" name='status'>
+		   		  <option value="open">Open</option>
+		   		  <option value="closed">Closed</option>
+		   		</select>
+		   	    <label class="mdl-textfield__label" for="sample3">Status</label>
+		   	  </div>
+		   	  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+		   	    <input class="mdl-textfield__input" type="text" name="title">
+		   	    <label class="mdl-textfield__label" for="sample3">Title</label>
+		   	  </div>
+		   	  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+		   	    <textarea class="mdl-textfield__input" type="text" rows= "3" name="description" ></textarea>
+		   	    <label class="mdl-textfield__label" for="sample3">Description</label>
+		   	  </div>
+		       </div>
+
+		       <div class="mdl-dialog__actions">
+		         <button type="submit" class="mdl-button">Add</button>
+		         <button type="button" class="mdl-button close">Exit</button>
+		       </div>
+		   </form>
+	     </dialog>

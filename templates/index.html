@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  	{% block head %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/dog.png') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/material.cyan-light_blue.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.notify.css') }}">
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.notify.min.js') }}"></script>
+  	<script src="{{ url_for('static', filename='js/dialog-polyfill.js') }}"></script>
+  	<link rel="stylesheet" href="{{ url_for('static', filename='css/dialog-polyfill.css') }}" />
+  {% endblock %}
+  </head>
+
+    <body>
+    <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+      <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout-title">Bug Bounty Manager</span>
+          <div class="mdl-layout-spacer"></div>
+          <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
+            <i class="material-icons">more_vert</i>
+          </button>
+        </div>
+      </header>
+
+      <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
+        <header class="demo-drawer-header">
+          <img src="{{ url_for('static', filename='images/user.jpg') }}" class="demo-avatar">
+          <div class="demo-avatar-dropdown">
+            <span>John Doe - #HackerGenial</span>
+          </div>
+        </header>
+
+        <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
+          <a class="mdl-navigation__link" href=""><i data-badge="10" class="mdl-color-text--blue-grey-400 material-icons mdl-badge mdl-badge--overlap" role="presentation">home</i>Bug Bounty Manager</a>
+          <a class="mdl-navigation__link" href="#target"><i data-badge="3" class="mdl-color-text--blue-grey-400 material-icons mdl-badge mdl-badge--overlap" role="presentation">assignment</i>Target's Research</a>
+          <a class="mdl-navigation__link" href="https://www.reddit.com/r/netsec"><i class="mdl-color-text--blue-grey-400 material-icons mdl-badge mdl-badge--overlap" role="presentation">bug_report</i>Reddit /r/netsec/</a>
+          <a class="mdl-navigation__link" href="#forum"><i class="mdl-color-text--blue-grey-400 material-icons mdl-badge mdl-badge--overlap" role="presentation">forum</i>Forum BugBountyWorld</a>
+          <a class="mdl-navigation__link" href="#send"><i class="mdl-color-text--blue-grey-400 material-icons mdl-badge mdl-badge--overlap" role="presentation">mail</i>Send a Bug Bounty report</a>
+          <a class="mdl-navigation__link" href="#training"><i class="mdl-color-text--blue-grey-400 material-icons mdl-badge mdl-badge--overlap" role="presentation">weekend</i>Bounty training and chill ?</a>
+          <div class="mdl-layout-spacer"></div>
+          <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">share</i>@Swissky</a>
+        </nav>
+      </div>
+
+      <main class="mdl-layout__content mdl-color--grey-100">
+		    {% include 'add-bounty.html' %}
+
+        <div class="mdl-grid demo-content demo-padding">
+			<table class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp">
+			  <thead>
+			    <tr>
+			      <th class="mdl-data-table__cell--non-numeric" >Vulnerability</th>
+			      <th class="mdl-data-table__cell--non-numeric" >Title</th>
+			      <th class="mdl-data-table__cell--non-numeric" >Reward</th>
+			      <th class="mdl-data-table__cell--non-numeric" >Status</th>
+			      <th>Edit</th>
+			      <th>Delete</th>
+			    </tr>
+			  </thead>
+
+			  <tbody id="bounty_list">
+          
+				  {% include 'bounties.html' %}
+          
+			  </tbody>
+			</table>	
+
+
+          <div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing">
+          	{% include 'informations.html' %}
+            <div class="demo-separator mdl-cell--1-col"></div>
+            {% include 'updates.html' %}
+          </div>
+
+        </div>
+      </main>
+    </div>
+     
+    <script src="{{ url_for('static', filename='js/material.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dialog.js') }}"></script>
+    <!-- Load modules -->
+  </body>
+</html>
