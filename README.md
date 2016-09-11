@@ -1,10 +1,15 @@
-# BugBounty Web App
-----------
+# BugBounty Web App ![alt text](https://github.com/sokaRepo/bugbounty/raw/master/static/images/dog.png "Logo Title Text 1")
+
+
 
 ### Introduction
 
 This web application is built with Flask, a web Python framework based on Jinja:
 [Flask official web site](http://flask.pocoo.org/ "Flask's Homepage").
+
+### About the project
+
+The web app's goal is to help BugBounty Hunters to manage their BugBounties and TODO list.
 
 ### Depedencies
 
