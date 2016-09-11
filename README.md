@@ -12,8 +12,7 @@ The web app's goal is to help BugBounty Hunters to manage their BugBounties and 
 
 ### Depedencies
 
-
-1. Pip - [Pip web site](https://pip.pypa.io/en/stable/installing/ "Pip's Homepage")
+1. Pip ([Pip web site](https://pip.pypa.io/en/stable/installing/ "Pip's Homepage"))
 	```bash
 	cd /tmp/
 	wget https://bootstrap.pypa.io/get-pip.py
@@ -27,7 +26,7 @@ The web app's goal is to help BugBounty Hunters to manage their BugBounties and 
 
 ### Download
 
-* Download project from github *
+	*Download project from github*
 
 	```bash
 	git clone https://github.com/sokaRepo/bugbounty.git
