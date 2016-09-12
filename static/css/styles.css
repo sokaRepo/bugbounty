@@ -318,3 +318,6 @@ _:-ms-input-placeholder, :root .demo-graph {
 tr{
   cursor: pointer;
 }
+td a{
+  color: black;
+}
