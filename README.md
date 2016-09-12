@@ -9,9 +9,9 @@ This web application is built with Flask, a web Python framework based on Jinja:
 
 ### About the project
 
-The web app's goal is to help BugBounty Hunters to manage their BugBounties and TODO list.
+The web app's goal is to help BugBounty Hunters to manage their BugBounties and Target list.
 
-### Depedencies
+### Dependencies
 
 
 * Pip 

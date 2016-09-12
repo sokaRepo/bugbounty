@@ -25,7 +25,7 @@ def close_database(exception):
     """Closes the database again at the end of the request."""
     top = _app_ctx_stack.top
     if hasattr(top, 'sqlite_db'):
-		top.sqlite_db.close()
+    	top.sqlite_db.close()
 
 @app.route('/')
 def index():
