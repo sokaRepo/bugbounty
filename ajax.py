@@ -4,6 +4,10 @@ from json import dumps as jsonify
 
 ajax = Blueprint('ajax', __name__)
 
+
+"""
+Add bounty in database
+"""
 @ajax.route('/ajax/bugbounty/add', methods=['POST'])
 def add_bounty():
 	if bounty_valid(request.form):
@@ -49,6 +53,21 @@ def delete_bounty(id):
 			return render_template('ajax.html', info=jsonify({'error':'n', 'msg':"Bounty #%s deleted" % id}))
 		except sqlite3.Error as e:
 			return render_template('ajax.html', info=jsonify({'error':'y', 'msg':"Can't delete row %s" % e}))
+	else:
+		return render_template('ajax.html', info=jsonify({'error':'y', 'msg':"Bounty #%s doesn't exist" % id}))		
+
+@ajax.route('/ajax/bugbounty/edit/<int:id>', methods=['POST'])
+def edit_bounty(id):
+	db = get_db()
+	if row_exists(db, 'bounties', id):
+		try:
+			db.execute('update bounties set vuln = ?, title = ?, description = ?, award = ?, status = ? where id = ?', \
+				[request.form['vuln'], request.form['title'], request.form['description'], request.form['reward'], \
+				request.form['status'], id])
+			db.commit()
+			return render_template('ajax.html', info=jsonify({'error':'n', 'msg':"Bounty #%s edited" % id}))
+		except sqlite3.Error as e:
+			return render_template('ajax.html', info=jsonify({'error':'y', 'msg':"Can't edit bounty %s" % e}))
 	else:
 		return render_template('ajax.html', info=jsonify({'error':'y', 'msg':"Bounty #%s doesn't exist" % id}))		
 
