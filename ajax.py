@@ -5,6 +5,17 @@ from json import dumps as jsonify
 ajax = Blueprint('ajax', __name__)
 
 
+
+
+@ajax.route('/ajax/bugbounty/show/<int:id>')
+def show_bounty(id):
+	data = query_db("select * from bounties where id = ?", [id], one=True)
+	info = {}
+	for k,d in zip(data.keys(), data):
+		info[k] = d
+	return render_template('ajax.html', info=jsonify(info))
+
+
 """
 Add bounty in database
 """
@@ -56,20 +67,27 @@ def delete_bounty(id):
 	else:
 		return render_template('ajax.html', info=jsonify({'error':'y', 'msg':"Bounty #%s doesn't exist" % id}))		
 
-@ajax.route('/ajax/bugbounty/edit/<int:id>', methods=['POST'])
-def edit_bounty(id):
-	db = get_db()
-	if row_exists(db, 'bounties', id):
-		try:
-			db.execute('update bounties set vuln = ?, title = ?, description = ?, award = ?, status = ? where id = ?', \
-				[request.form['vuln'], request.form['title'], request.form['description'], request.form['reward'], \
-				request.form['status'], id])
-			db.commit()
-			return render_template('ajax.html', info=jsonify({'error':'n', 'msg':"Bounty #%s edited" % id}))
-		except sqlite3.Error as e:
-			return render_template('ajax.html', info=jsonify({'error':'y', 'msg':"Can't edit bounty %s" % e}))
+
+@ajax.route('/ajax/bugbounty/edit', methods=['POST'])
+def edit_bounty():
+	if bounty_valid(request.form):
+		print "Bounty valid"
+		db = get_db()
+		if row_exists(db, 'bounties', request.form['id']):
+			try:
+				db.execute('update bounties set vuln = ?, title = ?, description = ?, award = ?, status = ? where id = ?', \
+					[request.form['vuln'], request.form['title'], request.form['description'], request.form['reward'], \
+					request.form['status'], request.form['id']])
+				db.commit()
+				return render_template('ajax.html', info=jsonify({'error':'n', 'msg':"Bounty #%s edited" % request.form['id']}))
+			except sqlite3.Error as e:
+				return render_template('ajax.html', info=jsonify({'error':'y', 'msg':"Can't edit bounty %s" % e}))
+		else:
+			return render_template('ajax.html', info=jsonify({'error':'y', 'msg':"Bounty #%s doesn't exist" % request.form['id']}))
 	else:
-		return render_template('ajax.html', info=jsonify({'error':'y', 'msg':"Bounty #%s doesn't exist" % id}))		
+		print "invalid bounty"
+		return render_template('ajax.html', info=jsonify({'error':'y', 'msg':"Some inputs are incomplete"}))
+
 
 
 @ajax.route('/ajax/reload')

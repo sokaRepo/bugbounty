@@ -1,88 +1,62 @@
-{% if bounty %}
-		<!-- Dialog to edit a bounty -->
-	     <dialog class="mdl-dialog" id="editbounty-dialog">
-	       <h4 class="mdl-dialog__title">Edit Bounty</h4>
 
-	   	   <form id="editbounty-form">
-	   	    <div class="mdl-dialog__content">
+<!-- Dialog to edit a bounty -->
+ <dialog class="mdl-dialog" id="editbounty-dialog">
+   <h4 class="mdl-dialog__title">Edit Bounty</h4>
 
-			     <div class="mdl-textfield mdl-textfield-mini mdl-js-textfield mdl-textfield--floating-label">
-	   		   	<select class="mdl-textfield__input" id='vuln' name='vuln'>
-	   		   	  {% if bounty.vuln == 'xss' %}
-	   			  	<option value="xss" selected="selected">XSS</option>
-	   			  {% else %}
-	   			  	<option value="xss">XSS</option>
-	   			  {% endif %}
-	   			  {% if bounty.vuln == 'sqli' %}
-	   			  	<option value="sqli" selected="selected">SQLI</option>
-	   			  {% else %}
-	   			  	<option value="sqli">SQLI</option>
-	   			  {% endif %}
-	   			  {% if bounty.vuln == 'rce' %}
-	   			  	<option value="rce" selected="selected">RCE</option>
-	   			  {% else %}
-	   			  	<option value="rce">RCE</option>
-	   			  {% endif %}
-	   			  {% if bounty.vuln == 'ssrf' %}
-	   			  	<option value="ssrf" selected="selected">ssrf</option>
-	   			  {% else %}
-	   			  	<option value="ssrf">SSRF</option>
-	   			  {% endif %}
-	   			  {% if bounty.vuln == 'ssti' %}
-	   			  	<option value="ssti" selected="selected">SSTI</option>
-	   			  {% else %}
-	   			  	<option value="ssti">SSTI</option>	
-	   			  {% endif %}
-	   			  {% if bounty.vuln == 'csvi' %}
-	   			  	<option value="csvi" selected="selected">CSVI</option>
-	   			  {% else %}
-	   			  	<option value="csvi">CSVi</option>
-	   			  {% endif %}
-	   			  {% if bounty.vuln == 'logic' %}
-	   			  	<option value="logic" selected="selected">Logic</option>
-	   			  {% else %}
-	   			  	<option value="logic">Logic</option>
-	   			  {% endif %}
-	   			  {% if bounty.vuln == 'other' %}
-	   			  	<option value="other" selected="selected">Other</option>
-	   			  {% else %}
-	   			  	<option value="other">Other</option>
-	   			  {% endif %}
-		   		</select>
-		   	    <label class="mdl-textfield__label" for="sample3">Vulnerability</label>
-			  </div>
-   
-		   	  <div class="mdl-textfield mdl-textfield-mini mdl-js-textfield mdl-textfield--floating-label">
-		   	    <input class="mdl-textfield__input" type="text" name="reward" value="{{ bounty.award }}">
-		   	    <label class="mdl-textfield__label" for="sample3">Reward</label>
-		   	  </div>
-   
-			  <div class="mdl-textfield mdl-textfield-mini mdl-js-textfield mdl-textfield--floating-label">
-		   		<select class="mdl-textfield__input" name='status'>
-		   		  {% if bounty.status == 'open' %}
-			   		  <option value="open" selected="selected">Open</option>
-			   		  <option value="closed">Closed</option>
-			   	  {% else %}
-			   	  	  <option value="open">Open</option>
-			   		  <option value="closed" selected="selected">Closed</option>
-			   	  {% endif %}
-		   		</select>
-		   	    <label class="mdl-textfield__label" for="sample3">Status</label>
-		   	  </div>
-		   	  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-		   	    <input class="mdl-textfield__input" type="text" name="title" value="{{ bounty.title }}">
-		   	    <label class="mdl-textfield__label" for="sample3">Title</label>
-		   	  </div>
-		   	  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-		   	    <textarea class="mdl-textfield__input" type="text" rows= "3" name="description" >{{ bounty.description }}</textarea>
-		   	    <label class="mdl-textfield__label" for="sample3">Description</label>
-		   	  </div>
-		       </div>
+	   <form id="editbounty-form" action="POST">
+	    <div class="mdl-dialog__content">
 
-		       <div class="mdl-dialog__actions">
-		         <button type="submit" class="mdl-button">Edit</button>
-		         <button type="button" class="mdl-button close">Exit</button>
-		       </div>
-		   </form>
-	     </dialog>
-{% endif %}
+	     <div class="mdl-textfield mdl-textfield-mini mdl-js-textfield mdl-textfield--floating-label">
+	     	<input type="hidden" name="id" id="bountyid">
+		   	<select class="mdl-textfield__input" id='evuln' name='vuln'>
+		   	  
+			  
+			  	<option value="xss">XSS</option>
+			  
+			  	<option value="sqli">SQLI</option>
+			  
+			  	<option value="rce">RCE</option>
+			  
+			  	<option value="ssrf">SSRF</option>
+			  
+			  	<option value="ssti">SSTI</option>	
+			  
+			  	<option value="csvi">CSVi</option>
+			  
+			  	<option value="logic">Logic</option>
+			  
+			  	<option value="other">Other</option>
+			  
+   		</select>
+   	    <label class="mdl-textfield__label" for="sample3">Vulnerability</label>
+	  </div>
+
+   	  <div class="mdl-textfield mdl-textfield-mini mdl-js-textfield mdl-textfield--floating-label">
+   	    <input class="mdl-textfield__input" type="text" name="reward" id="ereward">
+   	    <label class="mdl-textfield__label" for="sample3">Reward</label>
+   	  </div>
+
+	  <div class="mdl-textfield mdl-textfield-mini mdl-js-textfield mdl-textfield--floating-label">
+   		<select class="mdl-textfield__input" name='status' id="estatus">
+   		  
+	   		<option value="open">Open</option>
+	   		<option value="closed">Closed</option>
+   		</select>
+   	    <label class="mdl-textfield__label" for="sample3">Status</label>
+   	  </div>
+   	  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+   	    <input class="mdl-textfield__input" type="text" name="title" id="etitle">
+   	    <label class="mdl-textfield__label" for="sample3">Title</label>
+   	  </div>
+   	  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+   	    <textarea class="mdl-textfield__input" type="text" rows= "3" name="description" id="edescription"></textarea>
+   	    <label class="mdl-textfield__label" for="sample3">Description</label>
+   	  </div>
+       </div>
+
+       <div class="mdl-dialog__actions">
+         <button type="submit" class="mdl-button">Edit</button>
+         <button type="button" class="mdl-button close">Exit</button>
+       </div>
+   </form>
+ </dialog>

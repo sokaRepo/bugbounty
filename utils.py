@@ -32,6 +32,7 @@ def row_exists(db, table, id):
 
 def bounty_valid(b):
 	""" Check if the submited bounty has all the necessary elements"""
+	
 	ele = ['description', 'reward', 'status', 'vuln', 'title']
 	for el in ele:
 		if b[el] == '':
