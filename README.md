@@ -29,14 +29,27 @@ The web app's goal is to help BugBounty Hunters to manage their BugBounties and 
 	```
 
 ### Download App
-	
-```
-git clone https://github.com/sokaRepo/bugbounty.git
-```
+
+Using git command line	
+    ```
+    git clone https://github.com/sokaRepo/bugbounty.git
+    ```
 
 ### Run App
-	
-```
-export FLASK_APP=app.py
-flask run
-```
+
+* Run on localhost	
+    ```
+    python app.py
+    ```
+
+* To run the app trough network edit app.py
+    ```python
+    if __name__ == '__main__':
+    	app.run(host='0.0.0.0', debug=True)
+    ```
+
+* With no debug mode
+    ```python
+    if __name__ == '__main__':
+    	app.run()
+    ```
