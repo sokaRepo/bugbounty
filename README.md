@@ -42,7 +42,7 @@ Using git command line
     python app.py
     ```
 
-* To run the app trough network edit app.py
+* To run the app through network edit app.py
     ```python
     if __name__ == '__main__':
     	app.run(host='0.0.0.0', debug=True)
