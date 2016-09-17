@@ -42,7 +42,13 @@ Using git command line
     python app.py
     ```
 
-* To run the app through network edit app.py
+* with Flask command
+    ```
+    export FLASK_APP=app.py
+    flask run
+    ```
+
+* To run the app trough network edit app.py
     ```python
     if __name__ == '__main__':
     	app.run(host='0.0.0.0', debug=True)
@@ -53,3 +59,10 @@ Using git command line
     if __name__ == '__main__':
     	app.run()
     ```
+
+### Features
+* Add bounty in database (click on the pink (+) button)
+* Switch bounty's status (click on the status: (Open) | (Close) )
+* Edit bounty's data
+* Delete bounty
+* Temporary notifications via JQuery
