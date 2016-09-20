@@ -60,6 +60,42 @@ Using git command line
     	app.run()
     ```
 
+### Run through Apache
+Create a new conf in /etc/apache2/sites-available/
+```bash
+vim /etc/apache2/sites-available/bugbounty.conf
+```
+and change the conf above with your current configuration :
+```
+<VirtualHost *:80>
+    ServerName dashboard.toto.com
+    ServerAdmin bob@toto.com
+    WSGIScriptAlias / /var/www/toto.com/bugbounty/bugbounty.wsgi
+    <Directory /var/www/toto.com/bugbounty/>
+            Order allow,deny
+            Allow from all
+    </Directory>
+    Alias /static /var/www/toto.com/bugbounty/static
+    <Directory /var/www/toto.com/bugbounty/static/>
+            Order allow,deny
+            Allow from all
+    </Directory>
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    LogLevel warn
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+```
+
+In the App folder, change the bugbounty.wsgi file content:
+```python
+import sys
+sys.path.insert(0, '/var/www/toto.com/bugbounty/')
+from app import app as application
+```
+
+and in utils.py, change this line with the absolute path to the Database App:
+```python
+top.sqlite_db = sqlite3.connect('/var/www/toto.com/bugbounty/dashboard.sqlite')
+```
 ### Features
 * Add bounty in database (click on the pink (+) button)
 * Switch bounty's status (click on the status: (Open) | (Close) )
