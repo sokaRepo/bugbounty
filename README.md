@@ -83,6 +83,7 @@ and change the conf above with your current configuration :
     ErrorLog ${APACHE_LOG_DIR}/error.log
     LogLevel warn
     CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
 ```
 
 In the App folder, change the bugbounty.wsgi file content:
