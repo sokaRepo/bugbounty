@@ -1,0 +1,23 @@
+{% for entry in entries %}
+<tr>
+
+    <td class="mdl-data-table__cell--non-numeric mdl-text-bold">{{ entry.url }}</td>
+    <td class="mdl-data-table__cell--non-numeric" onclick=$('#xss-{{ entry.id }}').toggle();><img src="{{ entry.screenshot }}" height="100" width="300" class="img-responsive" alt=""></td>
+    <td class="mdl-data-table__cell--non-numeric">{{ entry.ip }}</td>
+
+	 <td><a href="#" onclick="delete_xss({{ entry.id }})"><i class="material-icons">delete_sweep</i></a></td>
+
+
+
+</tr>
+<tr id='xss-{{ entry.id }}'>
+   	<td colspan="6" class='bounty-content' >
+   		<p><b>Description: </b><br/>bla</p>
+   	</td>
+</tr>
+		   
+<script type="text/javascript">
+// Hide bounty description
+	$('#xss-{{ entry.id }}').hide();
+</script>
+{% endfor %}
