@@ -2,6 +2,7 @@
 from flask import Flask, render_template, _app_ctx_stack
 from utils import *
 from ajax import ajax
+from lab import lab
 
 
 app = Flask(__name__)
@@ -11,6 +12,7 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 60
 
 # import routes
 app.register_blueprint(ajax)
+app.register_blueprint(lab)
 
 """
 Type: filter
