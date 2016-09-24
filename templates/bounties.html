@@ -1,38 +1,53 @@
-{% for bounty in bounties %}
-<tr>
+  <table class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp">
+        <thead>
+          <tr>
+            <th class="mdl-data-table__cell--non-numeric" >Vulnerability</th>
+            <th class="mdl-data-table__cell--non-numeric" >Title</th>
+            <th class="mdl-data-table__cell--non-numeric" >Reward</th>
+            <th class="mdl-data-table__cell--non-numeric" >Status</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
 
-    <td class="mdl-data-table__cell--non-numeric mdl-text-bold">{{ bounty.vuln }}</td>
-    <td class="mdl-data-table__cell--non-numeric" onclick=$('#bounty-{{ bounty.id }}').toggle();>{{ bounty.title }}</td>
+        <tbody id="bounty_list">
+          {% for bounty in bounties %}
+          <tr>
 
-    <td class="mdl-data-table__cell--non-numeric" >{{ bounty.award }}</td>
-    	{% if bounty.status == 'open' %}
-    		<td onclick="bounty_status({{ bounty.id }}, 'close')">
-    		<span class="mdl-chip mdl-color--green-300">
-    			<span class="mdl-chip__text">Open</span>
-    		</span>
-    	</td>
-    	{% else %}
-	    	<td onclick="bounty_status({{ bounty.id }}, 'open')">
-	     		<span class="mdl-chip mdl-color--pink-300">
-	    			<span class="mdl-chip__text">Close</span>
-	    		</span>
-	    	</td>
-	    {% endif%}
+              <td class="mdl-data-table__cell--non-numeric mdl-text-bold">{{ bounty.vuln }}</td>
+              <td class="mdl-data-table__cell--non-numeric" onclick=$('#bounty-{{ bounty.id }}').toggle();>{{ bounty.title }}</td>
 
-	 <td><a href="#" class="show-edit_dialog" onclick="edit_bounty_dialog({{ bounty.id }})"><i class="material-icons">create</i></a></td>
-	 <td><a href="#" onclick="delete_bounty({{ bounty.id }})"><i class="material-icons">delete_sweep</i></a></td>
+              <td class="mdl-data-table__cell--non-numeric" >{{ bounty.award }}</td>
+              	{% if bounty.status == 'open' %}
+              		<td onclick="bounty_status({{ bounty.id }}, 'close')">
+              		<span class="mdl-chip mdl-color--green-300">
+              			<span class="mdl-chip__text">Open</span>
+              		</span>
+              	</td>
+              	{% else %}
+          	    	<td onclick="bounty_status({{ bounty.id }}, 'open')">
+          	     		<span class="mdl-chip mdl-color--pink-300">
+          	    			<span class="mdl-chip__text">Close</span>
+          	    		</span>
+          	    	</td>
+          	    {% endif%}
+
+          	 <td><a href="#" class="show-edit_dialog" onclick="edit_bounty_dialog({{ bounty.id }})"><i class="material-icons">create</i></a></td>
+          	 <td><a href="#" onclick="delete_bounty({{ bounty.id }})"><i class="material-icons">delete_sweep</i></a></td>
 
 
 
-</tr>
-<tr id='bounty-{{ bounty.id }}'>
-   	<td colspan="6" class='bounty-content' >
-   		<p><b>Description: </b><br/>{{ bounty.description|nltobr|safe }}</p>
-   	</td>
-</tr>
-		   
-<script type="text/javascript">
-// Hide bounty description
-	$('#bounty-{{ bounty.id }}').hide();
-</script>
-{% endfor %}
+          </tr>
+          <tr id='bounty-{{ bounty.id }}'>
+             	<td colspan="6" class='bounty-content' >
+             		<p><b>Description: </b><br/>{{ bounty.description|nltobr|safe }}</p>
+             	</td>
+          </tr>
+          		   
+          <script type="text/javascript">
+          // Hide bounty description
+          	$('#bounty-{{ bounty.id }}').hide();
+          </script>
+          {% endfor %}
+        </tbody>
+      </table>

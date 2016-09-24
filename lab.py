@@ -22,6 +22,12 @@ def grabber():
 			return 'db error'
 	return 'invalid grabbing'
 
+
+"""
+only diff between lab and index is the include(bounties or xss)
+"""
+
 @lab.route('/lab')
 def index():
-	return render_template('lab.html', entries=query_db('select * from xss'))
+	bounties_info, information_count, xsslab_info = extract_db()
+	return render_template('lab.html', bounties=bounties_info, nbounties=information_count[0][0], ndollars=sum_reward(bounties_info), xsslab=xsslab_info )

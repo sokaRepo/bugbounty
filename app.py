@@ -22,6 +22,20 @@ Replace new line by html new line
 def nltobr(data):
 	return data.replace('\n', '<br>\n')
 
+
+"""
+Type: filter
+Limit the size of a string, add new line if necessary
+"""
+@app.template_filter('limit')
+def limit(data):
+	o = []
+	while data:
+	    o.append(data[:90])
+	    data = data[90:]
+	return "\n".join(o)
+
+
 @app.teardown_appcontext
 def close_database(exception):
     """Closes the database again at the end of the request."""
@@ -30,38 +44,10 @@ def close_database(exception):
     	top.sqlite_db.close()
 
 
-
-"""
-Extract informations from db in order to display them in the templates
-"""
-def extract_db():
-	try:
-		db = get_db()
-		bounties_info     = db.execute('select * from bounties')
-		information_count = db.execute('select count(*) from bounties')
-		return bounties_info.fetchall(), information_count.fetchall()
-
-	except sqlite3.Error as e:
-		print e
-		return 'error', 'error'
-
-"""
-Calculate the total amount of $$$ earned
-"""
-def sum_reward(bounties):
-	total = 0
-	for bounty in bounties:
-		if '$' in bounty[4]:
-			total += int(bounty[4].replace('$','').replace(' ',''))
-	return total
-
-
-
-
 @app.route('/')
 def index():
-	bounties_info, information_count = extract_db()
-	return render_template('index.html', bounties=bounties_info, nbounties=information_count[0][0], ndollars=sum_reward(bounties_info) )
+	bounties_info, information_count, xsslab_info = extract_db()
+	return render_template('index.html', bounties=bounties_info, nbounties=information_count[0][0], ndollars=sum_reward(bounties_info), xsslab=xsslab_info )
 
 if __name__ == '__main__':
 	app.run(port=5001, debug=True)

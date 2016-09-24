@@ -38,3 +38,30 @@ def bounty_valid(b):
 		if b[el] == '':
 			return False
 	return True
+
+
+"""
+Extract informations from db in order to display them in the templates
+"""
+def extract_db():
+	try:
+		db = get_db()
+		bounties_info     = db.execute('select * from bounties')
+		information_count = db.execute('select count(*) from bounties')
+		xsslab_info       = db.execute('select * from xss')
+		return bounties_info.fetchall(), information_count.fetchall(), xsslab_info.fetchall()
+
+	except sqlite3.Error as e:
+		print e
+		return 'error', 'error'
+
+
+"""
+Calculate the total amount of $$$ earned
+"""
+def sum_reward(bounties):
+	total = 0
+	for bounty in bounties:
+		if '$' in bounty[4]:
+			total += int(bounty[4].replace('$','').replace(' ',''))
+	return total

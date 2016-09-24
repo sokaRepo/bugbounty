@@ -314,6 +314,7 @@ _:-ms-input-placeholder, :root .demo-graph {
 
 .bounty-content p{
   text-align: left;
+  max-width: 700px;
 }
 
 tr{
@@ -321,4 +322,16 @@ tr{
 }
 td a{
   color: black;
+}
+
+.xss-info{
+  text-align: left;
+  background: #546E7A;
+  color: #FFFFFF;
+  padding: 5px;
+  border-radius: 2px;
+}
+
+pre{
+  margin-top: -15px;
 }
