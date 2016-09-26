@@ -1,0 +1,55 @@
+  <table class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp">
+        <thead>
+          <tr>
+            <th class="mdl-data-table__cell--numeric" >ID</th>
+            <th class="mdl-data-table__cell--non-numeric" >URL</th>
+            <th class="mdl-data-table__cell--non-numeric" >Screen</th>
+            <th class="mdl-data-table__cell--non-numeric" >IP</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+
+        <tbody id="bounty_list">
+		{% for entry in xsslab %}
+		<tr onclick=$('#xss-{{ entry.id }}').toggle();>
+
+		    <td class="mdl-data-table__cell--numeric">{{ entry.id }}</td>
+		    <td class="mdl-data-table__cell--non-numeric mdl-text-bold" >{{ entry.url }}</td>
+		    <td class="mdl-data-table__cell--non-numeric">
+		    	<img src="{{ entry.screenshot }}" height="100" class="img-responsive" alt="">
+		    </td>
+		    <td class="mdl-data-table__cell--non-numeric">{{ entry.ip }}</td>
+			<td><a href="#" onclick="delete_xss({{ entry.id }})"><i class="material-icons">delete_sweep</i></a></td>
+
+		</tr>
+		<tr id='xss-{{ entry.id }}'>
+		   	<td colspan="6" class='bounty-content' >
+		   		<p>
+		   			<b>User Agent: </b><br/>
+		   			<pre class='xss-info '>{{ entry.useragent|limit }}</pre>
+		   		</p>
+		   		<p>
+		   			<b>Cookies: </b><br/>
+		   			<pre class='xss-info '>{{ entry.cookie|limit }}</pre>
+		   		</p>
+		   		<p>
+		   			<b>DOM HTML: </b><br/>
+		   			<pre class='xss-info dom-code'>{{ entry.domhtml|limit }}</pre>
+		   		</p>
+		   	</td>
+		</tr>
+				   
+		<script type="text/javascript">
+		// Hide bounty description
+			$('#xss-{{ entry.id }}').hide();
+		</script>
+		{% endfor %}
+       </tbody>
+	</table>
+
+<!--
+UserAgent:
+Cookies:
+DOM HTML:
+
+-->

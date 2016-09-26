@@ -1,4 +1,4 @@
 import sys
 
-sys.path.insert(0, '/home/soka/Documents/Prog/Python/Flask/bugbounty/')
+sys.path.insert(0, '/home/swissky/GitHub/bugbounty/')
 from app import app as application
