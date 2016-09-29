@@ -3,6 +3,8 @@ from flask import Flask, render_template, _app_ctx_stack
 from utils import *
 from ajax import ajax
 from lab import lab
+from training import training
+from targets import targets
 
 
 app = Flask(__name__)
@@ -13,6 +15,8 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 60
 # import routes
 app.register_blueprint(ajax)
 app.register_blueprint(lab)
+app.register_blueprint(training)
+app.register_blueprint(targets)
 
 """
 Type: filter
@@ -46,8 +50,9 @@ def close_database(exception):
 
 @app.route('/')
 def index():
-	bounties_info, information_count, xsslab_info = extract_db()
-	return render_template('index.html', bounties=bounties_info, nbounties=information_count[0][0], ndollars=sum_reward(bounties_info), xsslab=xsslab_info )
+	bounties_info, information_count, xsslab_info, xsslab_count, targets_info, targets_count = extract_db()
+	return render_template('index.html', bounties=bounties_info, nbounties=information_count[0][0], ndollars=sum_reward(bounties_info), xsslab=xsslab_info, nxss=xsslab_count[0][0], targets=targets_info, ntargets=targets_count[0][0], page='bounties.html' )
+
 
 if __name__ == '__main__':
 	app.run(port=5001, debug=True)

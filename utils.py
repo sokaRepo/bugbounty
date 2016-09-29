@@ -49,7 +49,11 @@ def extract_db():
 		bounties_info     = db.execute('select * from bounties')
 		information_count = db.execute('select count(*) from bounties')
 		xsslab_info       = db.execute('select * from xss')
-		return bounties_info.fetchall(), information_count.fetchall(), xsslab_info.fetchall()
+		xsslab_count      = db.execute('select count(*) from xss')
+		targets_info      = db.execute('select * from targets')
+		targets_count     = db.execute('select count(*) from targets')
+
+		return bounties_info.fetchall(), information_count.fetchall(), xsslab_info.fetchall(), xsslab_count.fetchall(), targets_info.fetchall(), targets_count.fetchall()
 
 	except sqlite3.Error as e:
 		print e

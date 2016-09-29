@@ -24,10 +24,9 @@ def grabber():
 
 
 """
-only diff between lab and index is the include(bounties or xss)
+only diff between lab and index is the include(bounties or lab)
 """
-
 @lab.route('/lab')
 def index():
-	bounties_info, information_count, xsslab_info = extract_db()
-	return render_template('lab.html', bounties=bounties_info, nbounties=information_count[0][0], ndollars=sum_reward(bounties_info), xsslab=xsslab_info )
+	bounties_info, information_count, xsslab_info, xsslab_count, targets_info, targets_count = extract_db()
+	return render_template('index.html', bounties=bounties_info, nbounties=information_count[0][0], ndollars=sum_reward(bounties_info), xsslab=xsslab_info, nxss=xsslab_count[0][0], targets=targets_info, ntargets=targets_count[0][0], page="lab.html" )

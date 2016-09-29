@@ -1,0 +1,35 @@
+   <table class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp">
+        <thead>
+          <tr>
+            <th class="mdl-data-table__cell--non-numeric" >Title</th>
+            <th class="mdl-data-table__cell--non-numeric" >Priority</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+
+        <tbody id="bounty_list">
+          {% for target in targets %}
+          <tr>
+              <td class="mdl-data-table__cell--non-numeric" onclick=$('#target-{{ target.id }}').toggle();>{{ target.title }}</td>
+              <td class="mdl-data-table__cell--non-numeric" >
+              	<i class="material-icons">grade</i>
+              	<i class="material-icons">grade</i> 
+              	<i class="material-icons">grade</i>  
+              </td>       	
+          	 <td><a href="#" class="show-edit_dialog" onclick="edit_target_dialog({{ target.id }})"><i class="material-icons">create</i></a></td>
+          	 <td><a href="#" onclick="delete_target({{ target.id }})"><i class="material-icons">delete_sweep</i></a></td>
+          </tr>
+          <tr id='target-{{ target.id }}'>
+             	<td colspan="6" class='bounty-content' >
+             		<p><b>Description: </b><br/>{{ target.description|nltobr|safe }}</p>
+             	</td>
+          </tr>
+          		   
+          <script type="text/javascript">
+          // Hide bounty description
+          	$('#target-{{ target.id }}').hide();
+          </script>
+          {% endfor %}
+        </tbody>
+      </table>
