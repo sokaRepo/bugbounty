@@ -1,12 +1,13 @@
 
 <!-- Dialog to edit a bounty -->
- <dialog class="mdl-dialog" id="editbounty-dialog">
+ <dialog class="mdl-dialog" id="edit-dialog">
    <h4 class="mdl-dialog__title">Edit Bounty</h4>
 
 	   <form id="editbounty-form" action="POST">
 	    <div class="mdl-dialog__content">
 
 	     <div class="mdl-textfield mdl-textfield-mini mdl-js-textfield mdl-textfield--floating-label">
+	     	<input type="hidden" name="table" id="table" value="bounties">
 	     	<input type="hidden" name="id" id="bountyid">
 		   	<select class="mdl-textfield__input" id='evuln' name='vuln'>
 		   	  
@@ -32,7 +33,7 @@
 	  </div>
 
    	  <div class="mdl-textfield mdl-textfield-mini mdl-js-textfield mdl-textfield--floating-label">
-   	    <input class="mdl-textfield__input" type="text" name="reward" id="ereward">
+   	    <input class="mdl-textfield__input" type="text" name="award" id="ereward">
    	    <label class="mdl-textfield__label" for="sample3">Reward</label>
    	  </div>
 

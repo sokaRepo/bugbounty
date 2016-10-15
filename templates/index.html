@@ -15,6 +15,7 @@
   	<script src="{{ url_for('static', filename='js/dialog-polyfill.js') }}"></script>
   	<link rel="stylesheet" href="{{ url_for('static', filename='css/dialog-polyfill.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/zoom.css') }}">
   {% endblock %}
   </head>
 
@@ -50,12 +51,17 @@
       </div>
 
       <main class="mdl-layout__content mdl-color--grey-100">
-		    {% include 'add-bounty.html' %}
-        {% include 'edit-bounty.html' %}
+        {% if page == 'targets.html' %}
+          {% include 'add-target.html' %}
+          {% include 'edit-target.html' %}
+        {% else %}
+  		    {% include 'add-bounty.html' %}
+          {% include 'edit-bounty.html' %}
+        {% endif %}
 
         <div class="mdl-grid demo-content demo-padding">
           {% include '%s' % page %}
-
+         
           <div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing">
           	{% include 'informations.html' %}
             <div class="demo-separator mdl-cell--1-col"></div>

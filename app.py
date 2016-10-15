@@ -1,5 +1,5 @@
 #-*- coding:utf8 -*-
-from flask import Flask, render_template, _app_ctx_stack
+from flask import Flask, render_template, _app_ctx_stack, request
 from utils import *
 from ajax import ajax
 from lab import lab
@@ -53,6 +53,10 @@ def index():
 	bounties_info, information_count, xsslab_info, xsslab_count, targets_info, targets_count = extract_db()
 	return render_template('index.html', bounties=bounties_info, nbounties=information_count[0][0], ndollars=sum_reward(bounties_info), xsslab=xsslab_info, nxss=xsslab_count[0][0], targets=targets_info, ntargets=targets_count[0][0], page='bounties.html' )
 
+@app.route('/test', methods=['POST'])
+def test():
+	#return "{0}".format(dir(request.form))
+	return "{0} / {1}".format(request.form.keys(), request.form.values())
 
 if __name__ == '__main__':
-	app.run(port=5001, debug=True)
+	app.run(port=5000, debug=True)

@@ -12,7 +12,6 @@
 	   	      <p>
 	   	        A bug bounty program is a deal offered by many websites and software developers by which individuals can receive recognition and compensation for reporting bugs.
 	   	      </p>
-	   	      <p id="addbounty-result" class="color:green"></p>		    
 
 			     <div class="mdl-textfield mdl-textfield-mini mdl-js-textfield mdl-textfield--floating-label">
 	   		   	<select class="mdl-textfield__input" id='vuln' name='vuln'>
@@ -30,7 +29,7 @@
 			  </div>
    
 		   	  <div class="mdl-textfield mdl-textfield-mini mdl-js-textfield mdl-textfield--floating-label">
-		   	    <input class="mdl-textfield__input" type="text" name="reward">
+		   	    <input class="mdl-textfield__input" type="text" name="award">
 		   	    <label class="mdl-textfield__label" for="sample3">Reward</label>
 		   	  </div>
    
@@ -52,7 +51,7 @@
 		       </div>
 
 		       <div class="mdl-dialog__actions">
-		         <button type="submit" class="mdl-button">Add</button>
+		         <button type="button" onclick="add_entry('bounties')" class="mdl-button">Add</button>
 		         <button type="button" class="mdl-button close">Exit</button>
 		       </div>
 		   </form>

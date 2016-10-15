@@ -10,7 +10,7 @@
           </tr>
         </thead>
 
-        <tbody id="bounty_list">
+        <tbody>
           {% for bounty in bounties %}
           <tr>
 
@@ -32,8 +32,8 @@
           	    	</td>
           	    {% endif%}
 
-          	 <td><a href="#" class="show-edit_dialog" onclick="edit_bounty_dialog({{ bounty.id }})"><i class="material-icons">create</i></a></td>
-          	 <td><a href="#" onclick="delete_bounty({{ bounty.id }})"><i class="material-icons">delete_sweep</i></a></td>
+          	 <td><a href="#" class="show-edit_dialog" onclick="edit_entry_dialog('bounties', {{ bounty.id }})"><i class="material-icons">create</i></a></td>
+          	 <td><a href="#" onclick="delete_entry('bounties', {{ bounty.id }})"><i class="material-icons">delete_sweep</i></a></td>
 
 
 

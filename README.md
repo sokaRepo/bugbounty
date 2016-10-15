@@ -103,3 +103,5 @@ top.sqlite_db = sqlite3.connect('/var/www/toto.com/bugbounty/dashboard.sqlite')
 * Edit bounty's data
 * Delete bounty
 * Temporary notifications via JQuery
+* XSS Lab
+* Manage your targets

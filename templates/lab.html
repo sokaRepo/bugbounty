@@ -16,7 +16,9 @@
 		    <td class="mdl-data-table__cell--numeric">{{ entry.id }}</td>
 		    <td class="mdl-data-table__cell--non-numeric mdl-text-bold" ><a class='mdl-text-shorten' href='{{ entry.url }}'>{{ entry.url }}</a></td>
 		    <td class="mdl-data-table__cell--non-numeric mdl-screen" >
-		    	<img src="{{ entry.screenshot }}" height="100" class="img-responsive" alt="">
+		    	  
+		    	<img src="{{ entry.screenshot }}" height="100" class="thumbnail zoom" alt="">
+		    	
 		    </td>
 		    <td class="mdl-data-table__cell--non-numeric">{{ entry.ip }}</td>
 			<td><a href="#" onclick="delete_xss({{ entry.id }})"><i class="material-icons">delete_sweep</i></a></td>

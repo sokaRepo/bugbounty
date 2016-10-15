@@ -29,11 +29,43 @@ def row_exists(db, table, id):
 	res = q.fetchall()
 	return True if res else False
 
+def insert(table, fields=[], values=[]):
+    # g.db is the database connection
+    db = get_db()
+    query = 'INSERT INTO %s (%s) VALUES (%s)' % (
+        table,
+        ', '.join(fields),
+        ', '.join(['?'] * len(values))
+    )
+    db.execute(query, values)
+    db.commit()
+    db.close()
+
+def update(table, condition, fields=[], values=[]):
+    # g.db is the database connection
+    db = get_db()
+    query = 'UPDATE {} SET {} WHERE {}'.format(
+    	table,
+    	', '.join('{}=?'.format(el) for el in fields),
+    	condition
+    )
+    db.execute(query, values)
+    db.commit()
+    db.close()
 
 def bounty_valid(b):
 	""" Check if the submited bounty has all the necessary elements"""
 	
-	ele = ['description', 'reward', 'status', 'vuln', 'title']
+	ele = ['description', 'award', 'status', 'vuln', 'title']
+	for el in ele:
+		if b[el] == '':
+			return False
+	return True
+
+def target_valid(b):
+	""" Check if the submited target has all the necessary elements"""
+	
+	ele = ['description', 'title', 'priority']
 	for el in ele:
 		if b[el] == '':
 			return False

@@ -8,17 +8,23 @@
           </tr>
         </thead>
 
-        <tbody id="bounty_list">
+        <tbody id="targets_list">
           {% for target in targets %}
           <tr>
               <td class="mdl-data-table__cell--non-numeric" onclick=$('#target-{{ target.id }}').toggle();>{{ target.title }}</td>
               <td class="mdl-data-table__cell--non-numeric" >
-              	<i class="material-icons">grade</i>
-              	<i class="material-icons">grade</i> 
-              	<i class="material-icons">grade</i>  
+                <div id="priority_{{ target.id }}">
+                  
+                </div>
+                <script type="text/javascript">
+                  for (var i=0; i<{{ target.priority }}; i++)
+                    $("#priority_{{ target.id }}").append("<i class=\"material-icons\">grade</i>\n");
+
+                </script>
+              	
               </td>       	
-          	 <td><a href="#" class="show-edit_dialog" onclick="edit_target_dialog({{ target.id }})"><i class="material-icons">create</i></a></td>
-          	 <td><a href="#" onclick="delete_target({{ target.id }})"><i class="material-icons">delete_sweep</i></a></td>
+          	 <td><a class="show-edit_dialog" onclick="edit_entry_dialog('targets', {{ target.id }});console.log('got it');"><i class="material-icons">create</i></a></td>
+          	 <td><a href="#" onclick="delete_entry('targets', {{ target.id }})"><i class="material-icons">delete_sweep</i></a></td>
           </tr>
           <tr id='target-{{ target.id }}'>
              	<td colspan="6" class='bounty-content' >

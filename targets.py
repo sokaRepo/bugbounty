@@ -4,6 +4,10 @@ from json import dumps as jsonify
 
 targets = Blueprint('targets', __name__)
 
+
+
+
+
 @targets.route('/targets')
 def index():
 	bounties_info, information_count, xsslab_info, xsslab_count, targets_info, targets_count = extract_db()

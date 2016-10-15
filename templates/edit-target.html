@@ -1,0 +1,36 @@
+
+		<!-- Dialog to edit a target -->
+	     <dialog class="mdl-dialog" id="edit-dialog">
+	       <h4 class="mdl-dialog__title">Edit Target</h4>
+
+	   	   <form id="edittarget-form">
+	   	    <div class="mdl-dialog__content">
+	   	    	<input type="hidden" name="table" id="table" value="targets">
+	   	    	<input type="hidden" id="targetid" name="targetid">
+			     <div class="mdl-textfield mdl-textfield-mini mdl-js-textfield mdl-textfield--floating-label">
+	   		   	<select class="mdl-textfield__input" id='epriority' name='epriority'>
+	   			  <option value="1">1</option>
+	   			  <option value="2">2</option>
+		   		  <option value="3">3</option>
+		   		  <option value="4">4</option>
+		   		  <option value="5">5</option>
+		   		</select>
+		   	    <label class="mdl-textfield__label" for="sample3">Priority</label>
+			  </div>
+   
+		   	  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+		   	    <input class="mdl-textfield__input" type="text" name="etitle" id="etitle">
+		   	    <label class="mdl-textfield__label" for="sample3">Title</label>
+		   	  </div>
+		   	  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+		   	    <textarea class="mdl-textfield__input" type="text" rows= "3" name="edescription" id="edescription"></textarea>
+		   	    <label class="mdl-textfield__label" for="sample3">Description</label>
+		   	  </div>
+		       </div>
+
+		       <div class="mdl-dialog__actions">
+		         <button type="submit" class="mdl-button">Edit</button>
+		         <button type="button" class="mdl-button close">Exit</button>
+		       </div>
+		   </form>
+	     </dialog>

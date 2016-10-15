@@ -23,7 +23,7 @@ $("#addbounty-form").on('submit', function() {
 
 
 
-var dialog_edit = document.querySelector('#edit-dialog');
+var dialog_edit = document.querySelector('#editbounty-dialog');
 	var showDialogButton = $('.show-edit_dialog');
 	if (! dialog_edit.showModal) {
 		dialogPolyfill.registerDialog(dialog_edit);
@@ -31,37 +31,16 @@ var dialog_edit = document.querySelector('#edit-dialog');
 
 
 	showDialogButton.on('click', function() {
-
 		dialog_edit.showModal();
 		$('._dialog_overlay').css('z-index',0);
-		//console.log("Value: " + showDialogButton.attr('v'));
-		//edit_bounty(showDialogButton.attr('v'));
-		//edit_entry($("#table"), )
+		console.log("Value: " + showDialogButton.attr('v'));
+		edit_bounty(showDialogButton.attr('v'));
 	});
 		
 	dialog_edit.querySelector('.close').addEventListener('click', function() {
 		dialog_edit.close();
 });
 
-/*
-var dialog_edit_target = document.querySelector('#edittarget-dialog');
-	var showDialogButton = $('.show-edit_dialog');
-	if (! dialog_edit_target.showModal) {
-		dialogPolyfill.registerDialog(dialog_edit_target);
-	}
-
-
-	showDialogButton.on('click', function() {
-		dialog_edit_target.showModal();
-		$('._dialog_overlay').css('z-index',0);
-		console.log("Value: " + showDialogButton.attr('v'));
-		edit_bounty(showDialogButton.attr('v'));
-	});
-		
-	dialog_edit_target.querySelector('.close').addEventListener('click', function() {
-		dialog_edit_target.close();
-});
-*/
 
 function show_dialog(dialog) {
 	$("#"+dialog).show();
@@ -97,6 +76,12 @@ function add_entry(table) {
 }
 
 function edit_entry_dialog(table, id) {
+
+	// show modal
+	dialog_edit.showModal();
+	// set modal dialog over all elements
+	$('._dialog_overlay').css('z-index',0);
+
 	$.get("/ajax/"+table+"/show/"+id, function(data) {
 		// get entry info
 		var d = jQuery.parseJSON(data);
@@ -133,7 +118,7 @@ function edit_entry(table) {
 	$.post("/ajax/"+table+"/edit", ele, function(data) {
 		data = jQuery.parseJSON(data);
 		if (data.error == 'n') {
-			reload_list( (table == 'bounties' ? 'bounty' : 'target') );
+			reload_list();
 			$(".backdrop").hide();
 			dialog_edit.close();
 			notif('success', 'Entry edited');
@@ -223,9 +208,8 @@ function notif(type, msg) {
 	});	
 }
 
-
-$("#addtarget-form").on('submit', function() {
-	add_entry('targets');
+$("#addbounty-form").on('submit', function() {
+	add_entry('bounties');
 	return false;
 });
 
@@ -234,6 +218,10 @@ $("#editbounty-form").on('submit', function() {
 	return false;
 });
 
+$("#addtarget-form").on('submit', function() {
+	add_entry('targets');
+	return false;
+});
 
 $("#edittarget-form").on('submit', function() {
 	edit_entry('targets');

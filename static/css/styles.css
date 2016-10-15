@@ -361,3 +361,12 @@ pre{
   width: 200px;
   display: inline-block;
 }
+
+#star-1,#star-2,#star-3,#star-4,#star-5{
+  cursor: pointer;
+}
+.star-material-icons{
+  font-size: 24px;
+  display: inline-block;
+  margin-top: 10px;
+}

@@ -1,0 +1,54 @@
+		<!-- Colored FAB button used for edit -->
+		<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored" id="show-dialog">
+		  <i class="material-icons">add</i>
+		</button>
+
+		<!-- Dialog to add a bounty -->
+	     <dialog class="mdl-dialog">
+	       <h4 class="mdl-dialog__title">New Target</h4>
+
+	   	   <form id="addtarget-form">
+	   	    <div class="mdl-dialog__content">
+
+			  
+			  <div class="mdl-textfield mdl-textfield-mini mdl-js-textfield mdl-textfield--floating-label" >
+			  	<script type="text/javascript">
+			   	    function set_color(star, max){
+			   	    	for(var i=star; i<=max; i++){
+			   	    		$("#star-"+i).css('color', 'rgba(0,0,0,.54)');
+			   	    	}
+
+			   	    	for(var i=0; i<=star; i++){
+			   	    		$("#star-"+i).css('color', 'rgb(64,196,255)');
+			   	    	}
+			   	    	$("#priority").val(star);
+
+			   	    }
+		   	   </script>
+
+			   	<input class="mdl-textfield__input" type=numeric value=3 id='priority' name='priority'>
+			   	<span onmouseover="set_color(1,5)" id='star-1'><i class="material-icons star-material-icons">grade</i></span>
+			   	<span onmouseover="set_color(2,5)" id='star-2'><i class="material-icons star-material-icons">grade</i></span>
+			   	<span onmouseover="set_color(3,5)" id='star-3'><i class="material-icons star-material-icons">grade</i></span>
+			   	<span onmouseover="set_color(4,5)" id='star-4'><i class="material-icons star-material-icons">grade</i></span>
+			   	<span onmouseover="set_color(5,5)" id='star-5'><i class="material-icons star-material-icons">grade</i></span>
+		   	    <label class="mdl-textfield__label" for="sample3">Priority</label>
+		   	  
+			  </div>
+   
+		   	  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+		   	    <input class="mdl-textfield__input" type="text" name="title">
+		   	    <label class="mdl-textfield__label" for="sample3">Title</label>
+		   	  </div>
+		   	  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+		   	    <textarea class="mdl-textfield__input" type="text" rows= "3" name="description" ></textarea>
+		   	    <label class="mdl-textfield__label" for="sample3">Description</label>
+		   	  </div>
+		       </div>
+
+		       <div class="mdl-dialog__actions">
+		         <button type="submit" class="mdl-button">Add</button>
+		         <button type="button" class="mdl-button close">Exit</button>
+		       </div>
+		   </form>
+	     </dialog>
