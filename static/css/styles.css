@@ -348,6 +348,13 @@ pre{
 
 .mdl-data-table__cell--non-numeric.mdl-data-table__cell--non-numeric.mdl-screen{
   padding:0;
+  width: 72%;
+  display: inline-block;
+}
+
+.demo-cards.mdl-cell.mdl-cell--4-col.mdl-cell--8-col-tablet.mdl-grid.mdl-grid--no-spacing{
+  display: inline-block;
+  width: 25%;
 }
 
 .youtube-list{
