@@ -58,16 +58,9 @@
   		    {% include 'add-bounty.html' %}
           {% include 'edit-bounty.html' %}
         {% endif %}
-
-        <div class="mdl-grid demo-content demo-padding">
-          {% include '%s' % page %}
-         
-          <div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing">
-          	{% include 'informations.html' %}
-            <div class="demo-separator mdl-cell--1-col"></div>
-            {% include 'updates.html' %}
-          </div>
-
+        
+        <div class="mdl-grid demo-content demo-padding" id="content_page">
+          {% include 'page.html' %}
         </div>
       </main>
     </div>

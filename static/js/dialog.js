@@ -69,7 +69,7 @@ function show_dialog(dialog) {
 
 function reload_list(type) {
 	$.get("/ajax/"+ type +"/reload", function(data) {
-		$("#data_list").html(data);
+		$("#content_page").html(data);
 	})
 }
 

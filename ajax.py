@@ -118,6 +118,6 @@ def edit_bounty(table):
 @ajax.route('/ajax/<page>/reload')
 def reload(page):
 	if page == 'bounty':
-		return render_template('bounties.html', bounties=query_db('select * from bounties'))
+		return render_template('page.html', page='bounties.html', bounties=query_db('select * from bounties'))
 	if page == 'target':
-		return render_template('targets.html', targets=query_db('select * from targets'))
+		return render_template('page.html', page='targets.html', targets=query_db('select * from targets'))
