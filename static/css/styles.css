@@ -377,3 +377,7 @@ pre{
   display: inline-block;
   margin-top: 10px;
 }
+
+.mdl-textfield.mdl-textfield-mini.mdl-js-textfield.mdl-textfield--floating-label.payload{
+  width: 400px;
+}

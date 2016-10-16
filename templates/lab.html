@@ -1,3 +1,5 @@
+  <div>
+
   <table class="mdl-data-table mdl-js-data-table  mdl-shadow--1dp">
         <thead>
           <tr>
@@ -48,3 +50,20 @@
 		{% endfor %}
        </tbody>
 	</table>
+
+	<script src="../static/js/clipboard.min.js"></script>
+	<script type="text/javascript">new Clipboard('.btn');</script>
+	{% for entry in payloads %}
+	<div>
+		<div class="mdl-textfield mdl-textfield-mini mdl-js-textfield mdl-textfield--floating-label payload">
+			<input id='payload' class="mdl-textfield__input" type="text" value='{{ entry }}'>
+			<label class="mdl-textfield__label" for="sample3">Payload</label>
+		</div>
+
+		<button data-clipboard-text="{{ entry }}"class="btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent button-delete-task copy-payload" >
+			Copy to clipboard
+		</button>
+	</div>
+	{% endfor %}
+
+  </div>

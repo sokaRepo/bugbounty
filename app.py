@@ -5,6 +5,7 @@ from ajax import ajax
 from lab import lab
 from training import training
 from targets import targets
+from payload import payload
 
 
 app = Flask(__name__)
@@ -17,6 +18,7 @@ app.register_blueprint(ajax)
 app.register_blueprint(lab)
 app.register_blueprint(training)
 app.register_blueprint(targets)
+app.register_blueprint(payload)
 
 """
 Type: filter
