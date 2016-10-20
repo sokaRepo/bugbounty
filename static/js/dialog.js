@@ -32,8 +32,8 @@ var dialog_edit = document.querySelector('#edit-dialog');
 
 	showDialogButton.on('click', function() {
 
-		dialog_edit.showModal();
-		$('._dialog_overlay').css('z-index',0);
+		//dialog_edit.showModal();
+		//$('._dialog_overlay').css('z-index',0);
 		//console.log("Value: " + showDialogButton.attr('v'));
 		//edit_bounty(showDialogButton.attr('v'));
 		//edit_entry($("#table"), )
@@ -97,6 +97,8 @@ function add_entry(table) {
 }
 
 function edit_entry_dialog(table, id) {
+	dialog_edit.showModal();
+	$('._dialog_overlay').css('z-index',0);
 	$.get("/ajax/"+table+"/show/"+id, function(data) {
 		// get entry info
 		var d = jQuery.parseJSON(data);

@@ -1,6 +1,14 @@
   <div>
 
   <table class="mdl-data-table mdl-js-data-table  mdl-shadow--1dp">
+  	<thead>
+  		<tr>
+  			<th class="mdl-data-table__cell--numeric" id="select_victims">Victims</th>
+  			<th class="mdl-data-table__cell--numeric" id="select_payloads">Payloads</th>
+  		</tr>
+  	</thead>
+  </table>	
+  <table class="mdl-data-table mdl-js-data-table  mdl-shadow--1dp" id="victims_list">
         <thead>
           <tr>
             <th class="mdl-data-table__cell--numeric" >ID</th>
@@ -51,19 +59,31 @@
        </tbody>
 	</table>
 
-	<script src="../static/js/clipboard.min.js"></script>
+	<script src="{{ url_for('static', filename='js/clipboard.min.js') }}"></script>
 	<script type="text/javascript">new Clipboard('.btn');</script>
-	{% for entry in payloads %}
-	<div>
-		<div class="mdl-textfield mdl-textfield-mini mdl-js-textfield mdl-textfield--floating-label payload">
-			<input id='payload' class="mdl-textfield__input" type="text" value='{{ entry }}'>
-			<label class="mdl-textfield__label" for="sample3">Payload</label>
+	<div id="payloads_list">	
+		{% for entry in payloads %}
+		<div>
+			<div class="mdl-textfield mdl-textfield-mini mdl-js-textfield mdl-textfield--floating-label payload">
+				<input id='payload' class="mdl-textfield__input" type="text" value='{{ entry }}'>
+				<label class="mdl-textfield__label" for="sample3">Payload</label>
+			</div>
+
+			<button data-clipboard-text="{{ entry }}"class="btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent button-delete-task copy-payload" >
+				Copy to clipboard
+			</button>
 		</div>
-
-		<button data-clipboard-text="{{ entry }}"class="btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent button-delete-task copy-payload" >
-			Copy to clipboard
-		</button>
+		{% endfor %}
 	</div>
-	{% endfor %}
-
-  </div>
+   </div>
+   <script type="text/javascript">
+   $("#payloads_list").hide();
+   	$('#select_victims').on('click', function() {
+   		$("#victims_list").show();
+   		$("#payloads_list").hide();
+   	});
+   	$('#select_payloads').on('click', function() {
+   		$("#victims_list").hide();
+   		$("#payloads_list").show();
+   	});
+   </script>
