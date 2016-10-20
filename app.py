@@ -55,7 +55,7 @@ def index():
 	if user_auth():
 		bounties_info, information_count, xsslab_info, xsslab_count, targets_info, targets_count = extract_db()
 		return render_template('index.html', username=session['auth'], bounties=bounties_info, nbounties=information_count[0][0], ndollars=sum_reward(bounties_info), xsslab=xsslab_info, nxss=xsslab_count[0][0], targets=targets_info, ntargets=targets_count[0][0], page='bounties.html' )
-	return redirect(url_for('login'))	
+	return redirect(url_for('login_page'))	
 
 @app.route('/login')
 def login_page():

