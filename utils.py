@@ -1,10 +1,12 @@
-from flask import _app_ctx_stack
+from flask import _app_ctx_stack, session
 from sqlite3 import dbapi2 as sqlite3
 
 """
 Database functions and other utils functions
 """
 
+def user_auth():
+	return (True if session['auth'] != '' else False) if 'auth' in session else False
 
 def get_db():
 	"""Opens a new database connection if there is none yet for the
@@ -28,6 +30,7 @@ def row_exists(db, table, id):
 	q = db.execute("select id from %s where id = ?" % table, [id])
 	res = q.fetchall()
 	return True if res else False
+
 
 def insert(table, fields=[], values=[]):
     # g.db is the database connection
@@ -75,7 +78,7 @@ def grab_valid(g):
 	ele = ['url', 'screenshot', 'domhtml', 'cookie', 'useragent']
 	for el in ele:
 		if g[el] == '':
-			return False
+				return False
 	return True
 
 """

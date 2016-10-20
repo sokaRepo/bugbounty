@@ -73,6 +73,18 @@ function reload_list(type) {
 	})
 }
 
+function login() {
+	var ele = $("#login-form :input").serialize();
+	$.post("/ajax/login", ele, function(data) {
+		data = jQuery.parseJSON(data);
+		if (data.error == 'n') {
+			document.location.href="/";
+		}else {
+			notif('error', data.msg);
+		}
+	});
+}
+
 function add_entry(table) {
 	// get all elements from submited form and serialize them
 	if (table == 'bounties')

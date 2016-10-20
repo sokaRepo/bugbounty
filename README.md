@@ -98,6 +98,7 @@ and in utils.py, change this line with the absolute path to the Database App:
 top.sqlite_db = sqlite3.connect('/var/www/toto.com/bugbounty/dashboard.sqlite')
 ```
 ### Features
+* Authentication with username/[sha1]password stored in database (default: admin/admin)
 * Add bounty in database (click on the pink (+) button)
 * Switch bounty's status (click on the status: (Open) | (Close) )
 * Edit bounty's data

@@ -1,14 +1,35 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, session, redirect
 from utils import *
 from json import dumps as jsonify
+from hashlib import sha1
 
 ajax = Blueprint('ajax', __name__)
 
 
+@ajax.route('/ajax/login', methods=['POST'])
+def login():
+	if user_auth():
+		return render_template('ajax.html', info=jsonify({'error':'y', 'msg':'Already logged'}))
+	if request.form['username'] != '' and request.form['password'] != '':
+		try:
+			data = query_db("select * from users where username = ? and password = ?",\
+			 [request.form['username'], sha1(request.form['password']).hexdigest()] )
+			
+			if len(data) == 1:
+				session['auth'] = request.form['username']
+				return render_template('ajax.html', info=jsonify({'error':'n', 'msg':'Login OK'}))
+			else:
+				return render_template('ajax.html', info=jsonify({'error':'y', 'msg':'Invalid username/password'}))
+		except sqlite3.Error as e:
+			return render_template('ajax.html', info=jsonify({'error':'y', 'msg':'Error: {}'.format(e)}))
+	else:
+		return render_template('ajax.html', info=jsonify({'error':'y', 'msg':'Invalid form'}))
 
 
 @ajax.route('/ajax/<table>/show/<int:id>')
 def show_bounty(table, id):
+	if not user_auth():
+		return render_template('ajax.html', info=jsonify({'error':'n', 'msg':'You are not authenticated'}))
 	if table != 'bounties' and table != 'targets':
 		return render_template('ajax.html', info=jsonify({'error':'y', 'msg':'Invalid table'}))
 	data = query_db("select * from {0} where id = ?".format(table), [id], one=True)
@@ -23,6 +44,8 @@ Add data in database
 """
 @ajax.route('/ajax/<table>/add', methods=['POST'])
 def add_bounty(table):
+	if not user_auth():
+		return render_template('ajax.html', info=jsonify({'error':'n', 'msg':'You are not authenticated'}))
 	if table == 'bounties':
 		if not bounty_valid(request.form):
 			return render_template('ajax.html', info=jsonify({'error':'y', 'msg':"Some inputs are incomplete"}))
@@ -45,6 +68,8 @@ Change status of a bounty
 """
 @ajax.route('/ajax/bugbounty/<int:id>/<status>')
 def change_status(id, status):
+	if not user_auth():
+		return render_template('ajax.html', info=jsonify({'error':'n', 'msg':'You are not authenticated'}))
 	if status == 'open' or status == 'close':
 		db = get_db()
 		if row_exists(db, 'bounties', id):
@@ -64,6 +89,8 @@ Delete entry from table
 """
 @ajax.route('/ajax/<table>/delete/<int:id>')
 def delete_bounty(table, id):
+	if not user_auth():
+		return render_template('ajax.html', info=jsonify({'error':'n', 'msg':'You are not authenticated'}))
 	if table != 'bounties' and table != 'targets':
 		return render_template('ajax.html', info=jsonify({'error':'y', 'msg':"Table invalid %s" % table}))
 	db = get_db()
@@ -80,6 +107,8 @@ def delete_bounty(table, id):
 
 @ajax.route('/ajax/<table>/edit', methods=['POST'])
 def edit_bounty(table):	
+	if not user_auth():
+		return render_template('ajax.html', info=jsonify({'error':'n', 'msg':'You are not authenticated'}))
 	if table == 'bounties':
 		if bounty_valid(request.form):
 			db = get_db()

@@ -1,5 +1,5 @@
 #-*- coding:utf8 -*-
-from flask import Flask, render_template, _app_ctx_stack, request
+from flask import Flask, render_template, _app_ctx_stack, request, session, redirect, url_for
 from utils import *
 from ajax import ajax
 from lab import lab
@@ -52,12 +52,23 @@ def close_database(exception):
 
 @app.route('/')
 def index():
-	bounties_info, information_count, xsslab_info, xsslab_count, targets_info, targets_count = extract_db()
-	return render_template('index.html', bounties=bounties_info, nbounties=information_count[0][0], ndollars=sum_reward(bounties_info), xsslab=xsslab_info, nxss=xsslab_count[0][0], targets=targets_info, ntargets=targets_count[0][0], page='bounties.html' )
+	if user_auth():
+		bounties_info, information_count, xsslab_info, xsslab_count, targets_info, targets_count = extract_db()
+		return render_template('index.html', username=session['auth'], bounties=bounties_info, nbounties=information_count[0][0], ndollars=sum_reward(bounties_info), xsslab=xsslab_info, nxss=xsslab_count[0][0], targets=targets_info, ntargets=targets_count[0][0], page='bounties.html' )
+	return redirect(url_for('login'))	
 
-@app.route('/test', methods=['GET', 'POST'])
+@app.route('/login')
+def login_page():
+	if user_auth():
+		return redirect(url_for('index'))
+	return render_template('index.html', page='login.html')
+
+@app.route('/test', methods=['GET'])
 def test():
-	return render_template('ajax.html', info=request.form['url'])
+	if user_auth():
+		return render_template('ajax.html', info="no session")
+	else:
+		return render_template('ajax.html', info="session set")
 
 if __name__ == '__main__':
 	app.run(port=5000, debug=True)
