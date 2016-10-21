@@ -85,6 +85,18 @@ function login() {
 	});
 }
 
+function logout() {
+	
+	$.get("/ajax/logout", function(data) {
+		data = jQuery.parseJSON(data);
+		if (data.error == 'n') {
+			document.location.href="/";
+		}else {
+			notif('error', data.msg);
+		}
+	});
+}
+
 function add_entry(table) {
 	// get all elements from submited form and serialize them
 	if (table == 'bounties')

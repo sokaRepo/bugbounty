@@ -37,9 +37,10 @@
 
       <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
         <header class="demo-drawer-header">
-          <img src="{{ url_for('static', filename='images/user.jpg') }}" class="demo-avatar">
+          <img src="{{ url_for('static', filename='images/user.jpg') }}" class="demo-avatar"><br>
           <div class="demo-avatar-dropdown">
             <span>{{ username }}</span>
+            <img src="{{ url_for('static', filename='images/logout.png') }}" onclick="logout()">
           </div>
         </header>
 

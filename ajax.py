@@ -26,6 +26,13 @@ def login():
 		return render_template('ajax.html', info=jsonify({'error':'y', 'msg':'Invalid form'}))
 
 
+@ajax.route('/ajax/logout', methods=['GET'])
+def logout():
+	if not user_auth():
+		return render_template('ajax.html', info=jsonify({'error':'y', 'msg':'You are not authenticated'}))
+	session.pop('auth', None)
+	return render_template('ajax.html', info=jsonify({'error':'n', 'msg':'Your are now deconnected'}))
+
 @ajax.route('/ajax/<table>/show/<int:id>')
 def show_bounty(table, id):
 	if not user_auth():
