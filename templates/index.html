@@ -39,10 +39,11 @@
         <header class="demo-drawer-header">
           <img src="{{ url_for('static', filename='images/user.jpg') }}" class="demo-avatar"><br>
           <div class="demo-avatar-dropdown">
-            <span>{{ username }}</span>
-            <img src="{{ url_for('static', filename='images/logout.png') }}" onclick="logout()">
+            <span class='username-display'>{{ username }}</span>
+            <br>
           </div>
         </header>
+            <button onclick="logout()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent button-delete-task" >Logout</button>
 
         <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
           <a class="mdl-navigation__link" href="./"><i data-badge="{{ nbounties }}" class="mdl-color-text--blue-grey-400 material-icons mdl-badge mdl-badge--overlap" role="presentation">home</i>Bug Bounty Manager</a>

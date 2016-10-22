@@ -381,3 +381,18 @@ pre{
 .mdl-textfield.mdl-textfield-mini.mdl-js-textfield.mdl-textfield--floating-label.payload{
   width: 400px;
 }
+
+.login-form.mdl-textfield-mini {
+  width: 100%;
+}
+
+.center{
+  text-align: center;
+}
+.middle{
+  margin: 0 auto;
+  display: block;
+}
+.username-display{
+  text-transform: capitalize;
+}
