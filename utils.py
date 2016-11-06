@@ -77,7 +77,7 @@ def target_valid(b):
 def grab_valid(g):
 	ele = ['url', 'screenshot', 'domhtml', 'cookie', 'useragent']
 	for el in ele:
-		if g[el] == '':
+		if not ele in g:
 				return False
 	return True
 
