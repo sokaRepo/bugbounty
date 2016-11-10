@@ -19,13 +19,13 @@
 
               <td class="mdl-data-table__cell--non-numeric" >{{ bounty.award }}</td>
               	{% if bounty.status == 'open' %}
-              		<td onclick="bounty_status({{ bounty.id }}, 'close')">
+              		<td onclick="bounty_status({{ bounty.id }}, 'close')" class="left">
               		<span class="mdl-chip mdl-color--green-300">
               			<span class="mdl-chip__text">Open</span>
               		</span>
               	</td>
               	{% else %}
-          	    	<td onclick="bounty_status({{ bounty.id }}, 'open')">
+          	    	<td onclick="bounty_status({{ bounty.id }}, 'open')" class="left">
           	     		<span class="mdl-chip mdl-color--pink-300">
           	    			<span class="mdl-chip__text">Close</span>
           	    		</span>
