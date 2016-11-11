@@ -258,19 +258,22 @@ _:-ms-input-placeholder, :root .demo-graph {
     right: 20px;
     z-index: 10000;
 }
-
-
 .text-centered{
   text-align: center;
 }
 
 .mdl-chip{
   text-align: center;
-  width: 40px;
+  /*width: 40px;*/
 }
 .mdl-chip-maxi{
   width: 105px;
 }
+
+.left.mdl-chip{
+  text-align: left;
+}
+
 
 .mdl-textfield{
   width: 100%;
@@ -308,7 +311,7 @@ _:-ms-input-placeholder, :root .demo-graph {
 }
 
 .mdl-data-table{
-  width: 50%;
+  width: 100%;
   margin-bottom: 10px;
 }
 
@@ -379,7 +382,7 @@ pre{
 }
 
 .mdl-textfield.mdl-textfield-mini.mdl-js-textfield.mdl-textfield--floating-label.payload{
-  width: 400px;
+  width: 700px;
 }
 
 .login-form.mdl-textfield-mini {
@@ -395,4 +398,8 @@ pre{
 }
 .username-display{
   text-transform: capitalize;
+}
+
+#payloads{
+  padding-top: 15px;
 }

@@ -1,14 +1,12 @@
-  <div>
-
-  <table class="mdl-data-table mdl-js-data-table  mdl-shadow--1dp">
-  	<thead>
-  		<tr>
-  			<th class="mdl-data-table__cell--numeric" id="select_victims">Victims</th>
-  			<th class="mdl-data-table__cell--numeric" id="select_payloads">Payloads</th>
-  		</tr>
-  	</thead>
-  </table>	
-  <table class="mdl-data-table mdl-js-data-table  mdl-shadow--1dp" id="victims_list">
+<div class="container">
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#xss">XSS Fires</a></li>
+    <li><a data-toggle="tab" href="#payloads">Payloads</a></li>
+  </ul>
+  
+  <div class="tab-content">
+    <div id="xss" class="tab-pane fade in active">
+      <table class="mdl-data-table mdl-js-data-table  mdl-shadow--1dp" id="victims_list">
         <thead>
           <tr>
             <th class="mdl-data-table__cell--numeric" >ID</th>
@@ -25,9 +23,9 @@
 
 		    <td class="mdl-data-table__cell--numeric">{{ entry.id }}</td>
 		    <td class="mdl-data-table__cell--non-numeric mdl-text-bold" ><a class='mdl-text-shorten' href='{{ entry.url }}'>{{ entry.url }}</a></td>
-		    <td class="mdl-data-table__cell--non-numeric mdl-screen">
+		    <td class="mdl-data-table__cell--non-numeric" >
 		    	  
-		    	<img src="{{ entry.screenshot }}" height="48" class="thumbnail zoom" alt="">
+		    	<img src="{{ entry.screenshot }}" height="55" class="thumbnail zoom" alt="">
 		    	
 		    </td>
 		    <td class="mdl-data-table__cell--non-numeric">{{ entry.ip }}</td>
@@ -50,15 +48,18 @@
 		   		</p>
 		   	</td>
 		</tr>
-				   
 		<script type="text/javascript">
 		// Hide bounty description
 			$('#xss-{{ entry.id }}').hide();
-		</script>
+		</script>		   
 		{% endfor %}
        </tbody>
 	</table>
 
+
+	
+    </div>
+    <div id="payloads" class="tab-pane fade">
 	<script src="{{ url_for('static', filename='js/clipboard.min.js') }}"></script>
 	<script type="text/javascript">new Clipboard('.btn');</script>
 	<div id="payloads_list">	
@@ -75,15 +76,7 @@
 		</div>
 		{% endfor %}
 	</div>
-   </div>
-   <script type="text/javascript">
-   $("#payloads_list").hide();
-   	$('#select_victims').on('click', function() {
-   		$("#victims_list").show();
-   		$("#payloads_list").hide();
-   	});
-   	$('#select_payloads').on('click', function() {
-   		$("#victims_list").hide();
-   		$("#payloads_list").show();
-   	});
-   </script>
+    </div>
+  </div>
+</div>
+
