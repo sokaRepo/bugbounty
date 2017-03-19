@@ -1,0 +1,31 @@
+<table class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp">
+    <thead>
+      <tr>
+        <th class="mdl-data-table__cell--non-numeric" >Company</th>
+        <th class="mdl-data-table__cell--non-numeric" >Program</th>
+        <th class="mdl-data-table__cell--non-numeric" >Added</th>
+      </tr>
+    </thead>
+
+    <tbody id="bounty_list">
+      {% for program in programs %}
+      <tr>
+          <td class="mdl-data-table__cell--non-numeric"><a href="{{ program.link }}" target="_target">{{ program.company }}</a></td>
+          <td class="mdl-data-table__cell--non-numeric">{{ program.lab }}</td>
+          <td class="mdl-data-table__cell--non-numeric">{{ program.date | stime }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    </table>
+   <ul class="pagination programs">
+    <li><a href="#" onclick="get_programs(1)"><<</a></li>
+    
+    {% if current_page > 1 %}
+      <li><a href="#" onclick="get_programs({{ current_page - 1 }});"><</a></li>
+    {% endif %}
+    <li class="active"><a href="#">{{ current_page }}</a></li>
+    {% if current_page < last_page %}
+      <li><a href="#" onclick="get_programs({{ current_page + 1 }});">></a></li>
+    {% endif %}
+    <li><a href="#" onclick="get_programs({{ last_page }})">>></a></li>
+  </ul>

@@ -6,10 +6,14 @@ from lab import lab
 from training import training
 from targets import targets
 from payload import payload
+from bountylist import bl
 
+import datetime
 
 app = Flask(__name__)
 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dashboard3.sqlite'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['SECRET_KEY'] = 'secret!'
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 60
 
@@ -19,6 +23,24 @@ app.register_blueprint(lab)
 app.register_blueprint(training)
 app.register_blueprint(targets)
 app.register_blueprint(payload)
+app.register_blueprint(bl)
+
+
+
+from dbinstance import db
+db.app = app
+db.init_app(app)
+
+with app.app_context():
+	db.create_all()
+
+from models import Info, Bounties
+
+
+
+
+
+
 
 """
 Type: filter
@@ -41,34 +63,27 @@ def limit(data):
 	    data = data[90:]
 	return "\n".join(o)
 
-
-@app.teardown_appcontext
-def close_database(exception):
-    """Closes the database again at the end of the request."""
-    top = _app_ctx_stack.top
-    if hasattr(top, 'sqlite_db'):
-    	top.sqlite_db.close()
-
+@app.template_filter('stime')
+def stime(date):
+	return datetime.datetime.fromtimestamp(int(date)).strftime('%Y-%m-%d %H:%M:%S')
 
 @app.route('/')
-def index():
+def home_index():
 	if user_auth():
-		bounties_info, information_count, xsslab_info, xsslab_count, targets_info, targets_count = extract_db()
-		return render_template('index.html', username=session['auth'], bounties=bounties_info, nbounties=information_count[0][0], ndollars=sum_reward(bounties_info), xsslab=xsslab_info, nxss=xsslab_count[0][0], targets=targets_info, ntargets=targets_count[0][0], page='bounties.html' )
+		return redirect(url_for('bl.show_bounty_list'))
 	return redirect(url_for('login_page'))	
+
+@app.route('/manage')
+def bounty_manager():
+	if user_auth():
+		return render_template('index.html', page='bounties.html', info=Info(), bounties=Bounties.get())
 
 @app.route('/login')
 def login_page():
 	if user_auth():
-		return redirect(url_for('index'))
-	return render_template('index.html', page='login.html')
-
-@app.route('/test', methods=['GET'])
-def test():
-	if user_auth():
-		return render_template('ajax.html', info="no session")
-	else:
-		return render_template('ajax.html', info="session set")
+		return redirect(url_for('show_bounty_list'))
+	return render_template('index.html', page='login.html', info=Info())
 
 if __name__ == '__main__':
-	app.run(port=5000, debug=True)
+	app.run()
+

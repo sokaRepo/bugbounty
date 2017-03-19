@@ -1,5 +1,7 @@
 from flask import _app_ctx_stack, session
 from sqlite3 import dbapi2 as sqlite3
+from math import ceil
+import re
 
 """
 Database functions and other utils functions
@@ -14,9 +16,10 @@ def get_db():
 	"""
 	top = _app_ctx_stack.top
 	if not hasattr(top, 'sqlite_db'):
-		top.sqlite_db = sqlite3.connect('dashboard.sqlite')
+		top.sqlite_db = sqlite3.connect('dashboard3.sqlite')
 		top.sqlite_db.row_factory = sqlite3.Row
 		return top.sqlite_db
+	# return top.sqlite_db
 
 
 def query_db(query, args=(), one=False):
@@ -65,6 +68,19 @@ def bounty_valid(b):
 			return False
 	return True
 
+def get_bounty_programs(n, row_per_page=20):
+	db = get_db()
+	q = db.execute('SELECT COUNT(*) FROM programs')
+	total = int(q.fetchall()[0][0])
+	nb_page = ceil(total/row_per_page)
+	if n > nb_page:
+		n = nb_page
+	row = (n-1)*row_per_page
+	q = db.execute('''SELECT * FROM programs LIMIT {},{} '''.format(row, row_per_page))
+	data = q.fetchall()
+	db.close()
+	return data
+
 def target_valid(b):
 	""" Check if the submited target has all the necessary elements"""
 	
@@ -81,24 +97,6 @@ def grab_valid(g):
 				return False
 	return True
 
-"""
-Extract informations from db in order to display them in the templates
-"""
-def extract_db():
-	try:
-		db = get_db()
-		bounties_info     = db.execute('select * from bounties')
-		information_count = db.execute('select count(*) from bounties')
-		xsslab_info       = db.execute('select * from xss')
-		xsslab_count      = db.execute('select count(*) from xss')
-		targets_info      = db.execute('select * from targets')
-		targets_count     = db.execute('select count(*) from targets')
-
-		return bounties_info.fetchall(), information_count.fetchall(), xsslab_info.fetchall(), xsslab_count.fetchall(), targets_info.fetchall(), targets_count.fetchall()
-
-	except sqlite3.Error as e:
-		print e
-		return 'error', 'error'
 
 
 """
@@ -107,6 +105,15 @@ Calculate the total amount of $$$ earned
 def sum_reward(bounties):
 	total = 0
 	for bounty in bounties:
-		if '$' in bounty[4]:
+		if bounty[4] is not None and '$' in bounty[4]:
 			total += int(bounty[4].replace('$','').replace(' ',''))
 	return total
+
+''' Parse program research '''
+def parse_programs(prog):
+	# m = re.findall(r'program=([a-z-,]+))?', prog)
+	m = re.findall(r'([a-zA-Z0-9-,]+)', prog)
+	if len(m) > 1:
+		return None
+	m = m[0].split(',')
+	return m

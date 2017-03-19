@@ -2,26 +2,22 @@ from flask import Blueprint, render_template, request, session, redirect
 from utils import *
 from json import dumps as jsonify
 from hashlib import sha1
+from subprocess import call
+from config import MAX_PROGRAMS_PER_PAGE
+from models import *
 
 ajax = Blueprint('ajax', __name__)
-
 
 @ajax.route('/ajax/login', methods=['POST'])
 def login():
 	if user_auth():
 		return render_template('ajax.html', info=jsonify({'error':'y', 'msg':'Already logged'}))
 	if request.form['username'] != '' and request.form['password'] != '':
-		try:
-			data = query_db("select * from users where username = ? and password = ?",\
-			 [request.form['username'], sha1(request.form['password']).hexdigest()] )
-			
-			if len(data) == 1:
-				session['auth'] = request.form['username']
-				return render_template('ajax.html', info=jsonify({'error':'n', 'msg':'Login OK'}))
-			else:
-				return render_template('ajax.html', info=jsonify({'error':'y', 'msg':'Invalid username/password'}))
-		except sqlite3.Error as e:
-			return render_template('ajax.html', info=jsonify({'error':'y', 'msg':'Error: {}'.format(e)}))
+		if Users.check_login(request.form['username'], request.form['password']):
+			session['auth'] = request.form['username']
+			return render_template('ajax.html', info=jsonify({'error':'n', 'msg':'Login OK'}))
+		else:
+			return render_template('ajax.html', info=jsonify({'error':'y', 'msg':'Invalid username/password'}))
 	else:
 		return render_template('ajax.html', info=jsonify({'error':'y', 'msg':'Invalid form'}))
 
@@ -33,17 +29,25 @@ def logout():
 	session.pop('auth', None)
 	return render_template('ajax.html', info=jsonify({'error':'n', 'msg':'Your are now deconnected'}))
 
+
 @ajax.route('/ajax/<table>/show/<int:id>')
 def show_bounty(table, id):
 	if not user_auth():
 		return render_template('ajax.html', info=jsonify({'error':'n', 'msg':'You are not authenticated'}))
-	if table != 'bounties' and table != 'targets':
-		return render_template('ajax.html', info=jsonify({'error':'y', 'msg':'Invalid table'}))
-	data = query_db("select * from {0} where id = ?".format(table), [id], one=True)
-	info = {}
-	for k,d in zip(data.keys(), data):
-		info[k] = d
-	return render_template('ajax.html', info=jsonify(info))
+	if table == 'bounties':
+		data = Bounties.get_by_id(id)
+	elif table == 'targets':
+		data = Targets.get_by_id(id)
+	else:
+		return render_template('ajax.html', info=jsonify({'error':'n', 'msg':'Invalid table'}))
+	if data:
+		data = data[0]
+		info = {}
+		for k,d in zip(data.keys(), data):
+			info[k] = d
+		return render_template('ajax.html', info=jsonify(info))
+	else:
+		return render_template('ajax.html', info=jsonify({'error':'n', 'msg':'Invalid Bounty #%s' % id}))
 
 
 """
@@ -78,14 +82,9 @@ def change_status(id, status):
 	if not user_auth():
 		return render_template('ajax.html', info=jsonify({'error':'n', 'msg':'You are not authenticated'}))
 	if status == 'open' or status == 'close':
-		db = get_db()
-		if row_exists(db, 'bounties', id):
-			try:
-				db.execute('update bounties set status = ? where id = ?', [status, id])
-				db.commit()
-				return render_template('ajax.html', info=jsonify({'error':'n', 'msg':"Bounty #%s is now %s" % (id, status)}))
-			except sqlite3.Error as e:
-				return render_template('ajax.html', info=jsonify({'error':'y', 'msg':"Can't update table " + e}))
+		if Bounties.exist(id):
+			Bounties.set_status(status, id)
+			return render_template('ajax.html', info=jsonify({'error':'n', 'msg':"Bounty #%s is now %s" % (id, status)}))
 		else:
 			return render_template('ajax.html', info=jsonify({'error':'y', 'msg':"Bounty #%s doesn't exist" % id}))
 	else:
@@ -98,7 +97,7 @@ Delete entry from table
 def delete_bounty(table, id):
 	if not user_auth():
 		return render_template('ajax.html', info=jsonify({'error':'n', 'msg':'You are not authenticated'}))
-	if table != 'bounties' and table != 'targets':
+	if table != 'bounties' and table != 'targets' and table != 'xss':
 		return render_template('ajax.html', info=jsonify({'error':'y', 'msg':"Table invalid %s" % table}))
 	db = get_db()
 	if row_exists(db, table, id):
@@ -121,19 +120,19 @@ def edit_bounty(table):
 			db = get_db()
 			if row_exists(db, table, request.form['id']):
 				try:
-					print "bounty exists"
+					# print "bounty exists"
 					db.execute('update bounties set vuln = ?, title = ?, description = ?, award = ?, status = ? where id = ?', \
 						[request.form['vuln'], request.form['title'], request.form['description'], request.form['award'], \
 						request.form['status'], request.form['id']])
 					db.commit()
-					print "Commit ok"
+					# print "Commit ok"
 					return render_template('ajax.html', info=jsonify({'error':'n', 'msg':"Bounty #%s edited" % request.form['id']}))
 				except sqlite3.Error as e:
 					return render_template('ajax.html', info=jsonify({'error':'y', 'msg':"Can't edit bounty %s" % e}))
 			else:
 				return render_template('ajax.html', info=jsonify({'error':'y', 'msg':"Bounty #%s doesn't exist" % request.form['id']}))
 		else:
-			print "invalid bounty"
+			# print "invalid bounty"
 			return render_template('ajax.html', info=jsonify({'error':'y', 'msg':"Some inputs are incomplete"}))
 	elif table == 'targets':
 		db = get_db()
@@ -157,3 +156,26 @@ def reload(page):
 		return render_template('page.html', page='bounties.html', bounties=query_db('select * from bounties'))
 	if page == 'target':
 		return render_template('page.html', page='targets.html', targets=query_db('select * from targets'))
+
+@ajax.route('/ajax/programs/<int:page>')
+def get_programs(page):
+	return render_template('page.html', programs=Programs.get_by_date_limit(page), page='bountylist.html', info=Info(), current_page=page, last_page=Programs.get_last_page() )	
+
+
+@ajax.route('/ajax/programs/search', methods=['POST'])
+def search_programs():
+	if request.form is not None and request.form['search'] != '':
+		# programs = [{'name':'Facebook'}, {'name':'Google'}]
+		search = request.form['search']
+		lab = parse_programs(search)
+		#print 'Lab: {}'.format(lab)
+		programs = Programs.search(search, lab=lab)
+		print programs
+		return render_template('page.html', programs=Programs.search(search), page='bountylist.html', info=Info(), current_page=1, last_page=Programs.get_last_page(), search=search )	
+	return render_template('page.html', programs=Programs.get_by_date_limit(page), page='bountylist.html', info=Info(), current_page=page, last_page=Programs.get_last_page() )	
+
+
+@ajax.route('/ajax/bot/newbug')
+def load_latest_bugbounty():
+	call(["python", "bugbounty_check.py"])
+	return render_template('ajax.html', info='')

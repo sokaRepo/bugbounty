@@ -32,36 +32,23 @@ var dialog_edit = document.querySelector('#edit-dialog');
 
 	showDialogButton.on('click', function() {
 
-		//dialog_edit.showModal();
-		//$('._dialog_overlay').css('z-index',0);
-		//console.log("Value: " + showDialogButton.attr('v'));
-		//edit_bounty(showDialogButton.attr('v'));
-		//edit_entry($("#table"), )
 	});
 		
 	dialog_edit.querySelector('.close').addEventListener('click', function() {
 		dialog_edit.close();
 });
 
-/*
-var dialog_edit_target = document.querySelector('#edittarget-dialog');
-	var showDialogButton = $('.show-edit_dialog');
-	if (! dialog_edit_target.showModal) {
-		dialogPolyfill.registerDialog(dialog_edit_target);
+
+function search_programs(program) {
+	if (program != '') {
+		$.post("/ajax/programs/search", "search="+program, function(data) {
+			$("#content_page").html(data);
+		});
+	}else {
+		get_programs(1);
 	}
+}
 
-
-	showDialogButton.on('click', function() {
-		dialog_edit_target.showModal();
-		$('._dialog_overlay').css('z-index',0);
-		console.log("Value: " + showDialogButton.attr('v'));
-		edit_bounty(showDialogButton.attr('v'));
-	});
-		
-	dialog_edit_target.querySelector('.close').addEventListener('click', function() {
-		dialog_edit_target.close();
-});
-*/
 
 function show_dialog(dialog) {
 	$("#"+dialog).show();
@@ -73,17 +60,31 @@ function reload_list(type) {
 	})
 }
 
+function get_programs(page) {
+	$.get("/ajax/programs/"+page, function(data) {
+		$("#content_page").html(data);
+	})
+}
+
 function login() {
 	var ele = $("#login-form :input").serialize();
 	$.post("/ajax/login", ele, function(data) {
 		data = jQuery.parseJSON(data);
 		if (data.error == 'n') {
-			document.location.href="/";
+			show_dialog('loadBountyDialog');
+			load_new_bounty();
 		}else {
 			notif('error', data.msg);
 		}
 	});
 }
+
+function load_new_bounty() {
+	$.get("/ajax/bot/newbug", function(data) {
+		document.location.href="/";
+	});
+}
+
 
 function logout() {
 	
@@ -190,7 +191,7 @@ function delete_entry(table, id) {
 			
 			data = jQuery.parseJSON(data);
 			if (data.error == 'n') {
-				reload_list((table=='bounties') ? 'bounty' : 'target');
+				reload_list((table=='bounties') ? 'bounty' : (table == 'xss') ? 'xss' : 'targets');
 				notif('success', data.msg);
 			}else {
 				notif('error', data.msg)

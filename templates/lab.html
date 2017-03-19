@@ -29,7 +29,7 @@
 		    	
 		    </td>
 		    <td class="mdl-data-table__cell--non-numeric">{{ entry.ip }}</td>
-			<td><a href="#" onclick="delete_xss({{ entry.id }})"><i class="material-icons">delete_sweep</i></a></td>
+			<td><a href="#" onclick="delete_entry('xss', {{ entry.id }})"><i class="material-icons">delete_sweep</i></a></td>
 
 		</tr>
 		<tr id='xss-{{ entry.id }}'>

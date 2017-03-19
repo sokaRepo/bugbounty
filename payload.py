@@ -3,7 +3,7 @@ import flask
 payload = Blueprint('payload', __name__)
 
 @payload.route('/js')
-def index():
+def payload_index():
 	# Set the grabber url
 	grabber = request.url.replace('js','lab/grabber')
 	resp = flask.Response( render_template('payload.js', url=grabber) )

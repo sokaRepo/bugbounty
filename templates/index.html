@@ -10,13 +10,15 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/material.cyan-light_blue.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.notify.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/jquery.notify.min.js') }}"></script>
-  	<script src="{{ url_for('static', filename='js/dialog-polyfill.js') }}"></script>
+    <!--<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">-->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
   	<link rel="stylesheet" href="{{ url_for('static', filename='css/dialog-polyfill.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/zoom.css') }}">
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.notify.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dialog-polyfill.js') }}"></script>
+
   {% endblock %}
   </head>
 
@@ -47,9 +49,10 @@
             <button onclick="logout()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent button-delete-task" >Logout</button>
 
         <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
-          <a class="mdl-navigation__link" href="./"><i data-badge="{{ nbounties }}" class="mdl-color-text--blue-grey-400 material-icons mdl-badge mdl-badge--overlap" role="presentation">home</i>Bug Bounty Manager</a>
-          <a class="mdl-navigation__link" href="/targets"><i data-badge="{{ ntargets }}" class="mdl-color-text--blue-grey-400 material-icons mdl-badge mdl-badge--overlap" role="presentation">assignment</i>Target's Research</a>
-          <a class="mdl-navigation__link" href="/lab"><i data-badge="{{ nxss }}" class="mdl-color-text--blue-grey-400 material-icons mdl-badge mdl-badge--overlap" role="presentation">bug_report</i>Blind XSS Lab</a>
+          <a class="mdl-navigation__link" href="{{ url_for('bounty_manager') }}"><i data-badge="{{ info.nbounties }}" class="mdl-color-text--blue-grey-400 material-icons mdl-badge mdl-badge--overlap" role="presentation">home</i>Bug Bounty Manager</a>
+          <a class="mdl-navigation__link" href="{{ url_for('targets.targets_index') }}"><i data-badge="{{ info.ntargets }}" class="mdl-color-text--blue-grey-400 material-icons mdl-badge mdl-badge--overlap" role="presentation">assignment</i>Target's Research</a>
+          <a class="mdl-navigation__link" href="{{ url_for('lab.lab_index') }}"><i data-badge="{{ info.nxss }}" class="mdl-color-text--blue-grey-400 material-icons mdl-badge mdl-badge--overlap" role="presentation">bug_report</i>Blind XSS Lab</a>
+          
           <a class="mdl-navigation__link" href="https://www.reddit.com/r/netsec"><i class="mdl-color-text--blue-grey-400 material-icons mdl-badge mdl-badge--overlap" role="presentation">forum</i>Reddit /r/netsec/</a>
           <a class="mdl-navigation__link" href="/training"><i class="mdl-color-text--blue-grey-400 material-icons mdl-badge mdl-badge--overlap" role="presentation">weekend</i>Training and Conferences</a>
           <div class="mdl-layout-spacer"></div>
@@ -61,11 +64,35 @@
         {% if page == 'targets.html' %}
           {% include 'add-target.html' %}
           {% include 'edit-target.html' %}
-        {% else %}
+        {% elif page == 'bounties.html' %}
   		    {% include 'add-bounty.html' %}
           {% include 'edit-bounty.html' %}
         {% endif %}
         
+
+        {% if page == 'bountylist.html' %}
+            <br>
+
+            <div class="form-group" style="left:40%; width: 20%; position: relative;">
+              <div class="inner-addon right-addon">
+                <i class="glyphicon glyphicon-search"></i>
+                {% if search %}
+                  <input type="text" class="form-control" id="query" value="{{ search }}">
+                {% else %}
+                  <input type="text" class="form-control" id="query">
+                {% endif %}
+              </div>
+            </div>
+            <script>
+              window.onload = function() {
+                $('#query').focus();
+              }
+              $("#query").on("change paste keyup", function() {
+                 search_programs($(this).val());
+              });
+            </script>
+          {% endif %}
+
         <div class="mdl-grid demo-content demo-padding" id="content_page">
           {% include 'page.html' %}
         </div>

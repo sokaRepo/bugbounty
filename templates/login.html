@@ -22,3 +22,12 @@
 		<button type="button" onclick="login()" class="mdl-button">Login</button>
 	</div>
 </form>
+<dialog class="mdl-dialog" id="loadBountyDialog">
+   <h4 class="mdl-dialog__title">Progress</h4>
+   <div class="mdl-dialog__content">
+   		<center>
+	   		<img src="{{ url_for('static', filename='images/gears.svg') }}"><br><br>
+	   		<h4>Loading the latest available Bug Bounty</h4>
+   		</center>
+   	</div>
+ </dialog>

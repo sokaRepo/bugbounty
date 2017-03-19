@@ -4,8 +4,9 @@ from json import dumps as jsonify
 
 training = Blueprint('training', __name__)
 
+
 @training.route('/training')
-def index():
+def training_index():
 	if not user_auth():
 		return redirect(url_for('index'))
 	bounties_info, information_count, xsslab_info, xsslab_count, targets_info, targets_count = extract_db()
