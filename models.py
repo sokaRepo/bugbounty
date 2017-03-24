@@ -172,6 +172,7 @@ class Users(db.Model):
 
 class Info():
 	def __init__(self):
+		self.nprograms = Programs.count()
 		self.nbounties = Bounties.count()
 		self.ndollars = sum_reward(Bounties.get())
 		self.nxss = Xss.count()

@@ -49,6 +49,8 @@
             <button onclick="logout()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent button-delete-task" >Logout</button>
 
         <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
+          <a class="mdl-navigation__link" href="{{ url_for('bl.show_bounty_list') }}"><i data-badge="{{ info.nprograms }}" class="mdl-color-text--blue-grey-400 material-icons mdl-badge mdl-badge--overlap" role="presentation">home</i>Programs list</a>
+
           <a class="mdl-navigation__link" href="{{ url_for('bounty_manager') }}"><i data-badge="{{ info.nbounties }}" class="mdl-color-text--blue-grey-400 material-icons mdl-badge mdl-badge--overlap" role="presentation">home</i>Bug Bounty Manager</a>
           <a class="mdl-navigation__link" href="{{ url_for('targets.targets_index') }}"><i data-badge="{{ info.ntargets }}" class="mdl-color-text--blue-grey-400 material-icons mdl-badge mdl-badge--overlap" role="presentation">assignment</i>Target's Research</a>
           <a class="mdl-navigation__link" href="{{ url_for('lab.lab_index') }}"><i data-badge="{{ info.nxss }}" class="mdl-color-text--blue-grey-400 material-icons mdl-badge mdl-badge--overlap" role="presentation">bug_report</i>Blind XSS Lab</a>
