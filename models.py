@@ -1,5 +1,5 @@
 from math import ceil
-from hashlib import sha1
+from hashlib import sha512
 from utils import sum_reward
 from config import MAX_PROGRAMS_PER_PAGE
 
@@ -166,7 +166,7 @@ class Users(db.Model):
 
 	@staticmethod
 	def check_login(username, password):
-		return True if Users.query.filter(Users.username == username, Users.password == sha1(password).hexdigest() ).count() > 0 else False
+		return True if Users.query.filter(Users.username == username, Users.password == sha512(password).hexdigest() ).count() > 0 else False
 
 
 
