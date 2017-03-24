@@ -16,49 +16,39 @@ The web app's goal is to help BugBounty Hunters to manage their BugBounties and 
 
 * Pip 
 
-	```bash
-	cd /tmp/
-	wget https://bootstrap.pypa.io/get-pip.py
-	python get-pip.py
-	rm get-pip.py
-	```
-* Flask python library
+```bash
+cd /tmp/
+wget https://bootstrap.pypa.io/get-pip.py
+python get-pip.py
+rm get-pip.py
+```
+* Install all requirements
 
-	```bash
-	pip install flask
-	```
+```bash
+pip install -r requirements.txt
+```
 
-### Download App
-
-Using git command line	
-    ```
-    git clone https://github.com/sokaRepo/bugbounty.git
-    ```
 
 ### Run App
 
 * Run on localhost	
-    ```
-    python app.py
-    ```
+```
+python app.py
+```
 
 * with Flask command
-    ```
-    export FLASK_APP=app.py
-    flask run
-    ```
+
+```
+export FLASK_APP=app.py
+flask run
+```
 
 * To run the app trough network edit app.py
-    ```python
-    if __name__ == '__main__':
-    	app.run(host='0.0.0.0', debug=True)
-    ```
 
-* With no debug mode
-    ```python
-    if __name__ == '__main__':
-    	app.run()
-    ```
+```python
+flask run --host 0.0.0.0
+```
+
 
 ### Run through Apache
 Create a new conf in /etc/apache2/sites-available/
@@ -99,6 +89,7 @@ top.sqlite_db = sqlite3.connect('/var/www/toto.com/bugbounty/dashboard.sqlite')
 ```
 ### Features
 * Authentication with username/[sha1]password stored in database (default: admin/admin)
+* Bug Bounty programs scrapped from Vuln-Lab, BugCrowd, HackerOne and BountyFactory
 * Add bounty in database (click on the pink (+) button)
 * Switch bounty's status (click on the status: (Open) | (Close) )
 * Edit bounty's data
