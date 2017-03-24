@@ -12,7 +12,7 @@ import datetime
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dashboard3.sqlite'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dashboard.sqlite'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['SECRET_KEY'] = 'secret!'
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 60

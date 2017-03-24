@@ -6,7 +6,7 @@ import sqlite3
 import json
 
 def conn_sqlite():
-	conn = sqlite3.connect('dashboard3.sqlite')
+	conn = sqlite3.connect('dashboard.sqlite')
 	return conn, conn.cursor()
 
 def check_vuln_lab():
